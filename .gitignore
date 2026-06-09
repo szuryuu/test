@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+backend/bin/
+
+# Environment (JANGAN commit .env)
+.env
+backend/.env
+frontend/.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build output
+frontend/dist/
+
+# Go
+backend/go.sum
+
+# Docker
+postgres_data/

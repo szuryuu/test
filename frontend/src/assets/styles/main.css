@@ -1,0 +1,78 @@
+/* Tailwind CSS 4 */
+@import "tailwindcss";
+
+/* ============================================
+   KasirAI Design System — Apple-inspired
+   ============================================ */
+
+@theme {
+  /* Neutral foundation */
+  --color-absolute-black: #000000;
+  --color-pale-gray: #f5f5f7;
+  --color-near-black: #1d1d1f;
+  --color-pure-white: #ffffff;
+
+  /* Accent */
+  --color-apple-blue: #0071e3;
+  --color-link-blue: #0066cc;
+  --color-bright-link: #2997ff;
+
+  /* Surfaces */
+  --color-surface-dark-a: #272729;
+  --color-surface-dark-b: #262629;
+  --color-surface-dark-c: #28282b;
+  --color-surface-dark-d: #2a2a2c;
+
+  /* Text */
+  --color-text-secondary: #6e6e73;
+  --color-border-soft: #d2d2d7;
+  --color-border-mid: #86868b;
+  --color-utility-dark: #424245;
+
+  /* Typography — Inter as SF Pro substitute */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Border radius tier */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --radius-xl: 56px;
+  --radius-pill: 980px;
+  --radius-full: 50%;
+}
+
+/* Base */
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-pale-gray);
+  color: var(--color-near-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar — subtle */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-soft);
+  border-radius: 3px;
+}
+
+/* Links */
+a {
+  color: var(--color-link-blue);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--color-apple-blue);
+}
+
+/* Utility */
+.text-secondary {
+  color: var(--color-text-secondary);
+}

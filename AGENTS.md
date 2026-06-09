@@ -123,16 +123,16 @@ Browser → GET /api/v1/dashboard/summary?umkm_id=X&period=monthly
 - **Framework:** Vue 3 dengan Composition API (`<script setup>`) — BUKAN Options API
 - **Build tool:** Vite (latest)
 - **State management:** Pinia — bukan Vuex
-- **Router:** Vue Router 5
+- **Router:** Vue Router 4 — latest stable (~4.5.x). Vue Router 5 does not exist.
 - **HTTP client:** Axios
 - **UI Components:** PrimeVue 4 — bukan Vuetify, bukan Element Plus, bukan Naive UI
 - **Charts:** Chart.js via vue-chartjs — bukan ECharts, bukan ApexCharts
-- **CSS:** PrimeFlex + Tailwind CSS 4 (utility only, tidak pakai component Tailwind)
+- **CSS:** PrimeFlex + Tailwind CSS 4 (utility only via `@tailwindcss/vite`, CSS-first config, tidak pakai component Tailwind)
 - **Formatter:** Prettier + ESLint
 
 ### Database
 
-- **PostgreSQL 15** — bukan MySQL, bukan SQLite, bukan MongoDB
+- **PostgreSQL 17** — bukan MySQL, bukan SQLite, bukan MongoDB
 - Semua timestamp menggunakan `TIMESTAMPTZ` (timezone-aware)
 - Semua ID menggunakan `UUID` (`gen_random_uuid()`)
 - Soft delete menggunakan kolom `deleted_at TIMESTAMPTZ NULL`
@@ -142,9 +142,11 @@ Browser → GET /api/v1/dashboard/summary?umkm_id=X&period=monthly
 - **WhatsApp:** Fonnte API (https://fonnte.com) — bukan Twilio, bukan Meta Cloud API
   - Endpoint webhook: `POST /webhook/whatsapp`
   - Fonnte kirim `multipart/form-data` dengan field: `sender`, `message`, `device`
-- **AI:** DeepSeek API — model `deepseek-v4-flash` — bukan openai, bukan gemini
+- **AI:** DeepSeek API — model `deepseek-chat` (DeepSeek-V3 atau yang terbaru) — bukan openai, bukan gemini
   - Base URL: `https://api.deepseek.com`
   - Format: OpenAI-compatible (`/v1/chat/completions`)
+  - Verifikasi model terbaru: GET `https://api.deepseek.com/models`
+  - **CATATAN:** `deepseek-v4-flash` BUKAN model yang valid. Model DeepSeek yang tersedia: `deepseek-chat` (V3), `deepseek-reasoner` (R1).
 
 ---
 
@@ -175,7 +177,7 @@ JWT_EXPIRY_HOURS=72
 # DeepSeek AI
 DEEPSEEK_API_KEY=
 DEEPSEEK_BASE_URL=https://api.deepseek.com
-DEEPSEEK_MODEL=deepseek-v4-flash
+DEEPSEEK_MODEL=deepseek-chat
 DEEPSEEK_MAX_TOKENS=1000
 DEEPSEEK_TIMEOUT_SECONDS=30
 
@@ -299,18 +301,18 @@ kasiraiai/
 ```
 module kasiraiai/backend
 
-go 1.21
+go 1.26
 
 require (
     github.com/gin-gonic/gin v1.12.0
-    github.com/gin-contrib/cors v1.5.0
-    github.com/jackc/pgx/v5 v5.5.4
-    github.com/golang-migrate/migrate/v4 v4.17.0
+    github.com/gin-contrib/cors v1.7.0
+    github.com/jackc/pgx/v5 v5.7.0
+    github.com/golang-migrate/migrate/v4 v4.18.0
     github.com/golang-jwt/jwt/v5 v5.2.1
     github.com/joho/godotenv v1.5.1
-    github.com/go-playground/validator/v10 v10.19.0
+    github.com/go-playground/validator/v10 v10.22.0
     github.com/google/uuid v1.6.0
-    golang.org/x/crypto v0.21.0
+    golang.org/x/crypto v0.28.0
 )
 ```
 
@@ -321,21 +323,23 @@ require (
 ```json
 {
   "dependencies": {
-    "vue": "^3.4.0",
-    "vue-router": "^5.1.0",
-    "pinia": "^2.1.0",
-    "axios": "^1.6.0",
-    "primevue": "^4.0.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.5.0",
+    "pinia": "^2.2.0",
+    "axios": "^1.7.0",
+    "primevue": "^4.3.0",
     "primeicons": "^7.0.0",
-    "primeflex": "^3.3.0",
+    "primeflex": "^4.0.0",
     "chart.js": "^4.4.0",
     "vue-chartjs": "^5.3.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.0",
-    "vite": "^5.0.0",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.0"
+    "@vitejs/plugin-vue": "^5.2.0",
+    "vite": "^6.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.4.0"
   }
 }
 ```
@@ -822,11 +826,10 @@ export const formatRupiah = (amount) => {
 ## 12. DOCKER COMPOSE (development only)
 
 ```yaml
-# docker-compose.yml
-version: "3.8"
+# docker-compose.yml (Docker Compose v2 — tanpa key "version")
 services:
   postgres:
-    image: postgres:15-alpine
+    image: postgres:17-alpine
     environment:
       POSTGRES_DB: kasiraiai
       POSTGRES_USER: postgres
