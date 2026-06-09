@@ -108,12 +108,12 @@ Browser → GET /api/v1/dashboard/summary?umkm_id=X&period=monthly
 
 ### Backend
 
-- **Framework:** Gin (github.com/gin-gonic/gin v1.9.1) — bukan Echo, bukan Fiber, bukan chi
+- **Framework:** Gin (github.com/gin-gonic/gin v1.12.0) — bukan Echo, bukan Fiber, bukan chi
 - **Database driver:** pgx/v5 (github.com/jackc/pgx/v5) — bukan database/sql langsung, bukan gorm, bukan sqlx
 - **Migration:** golang-migrate/migrate (github.com/golang-migrate/migrate/v4) — file SQL di `backend/migrations/`
 - **JWT:** golang-jwt/jwt (github.com/golang-jwt/jwt/v5)
 - **Env loading:** godotenv (github.com/joho/godotenv) — hanya untuk development
-- **Logging:** `log/slog` (standard library, Go 1.21+) — bukan zerolog, bukan zap, bukan logrus
+- **Logging:** `log/slog` (standard library, Go 1.26+) — bukan zerolog, bukan zap, bukan logrus
 - **HTTP client:** `net/http` standard library — bukan resty, bukan heimdall
 - **Validasi:** go-playground/validator (github.com/go-playground/validator/v10)
 - **CORS:** github.com/gin-contrib/cors
@@ -123,11 +123,11 @@ Browser → GET /api/v1/dashboard/summary?umkm_id=X&period=monthly
 - **Framework:** Vue 3 dengan Composition API (`<script setup>`) — BUKAN Options API
 - **Build tool:** Vite (latest)
 - **State management:** Pinia — bukan Vuex
-- **Router:** Vue Router 4
+- **Router:** Vue Router 5
 - **HTTP client:** Axios
 - **UI Components:** PrimeVue 4 — bukan Vuetify, bukan Element Plus, bukan Naive UI
 - **Charts:** Chart.js via vue-chartjs — bukan ECharts, bukan ApexCharts
-- **CSS:** PrimeFlex + Tailwind CSS (utility only, tidak pakai component Tailwind)
+- **CSS:** PrimeFlex + Tailwind CSS 4 (utility only, tidak pakai component Tailwind)
 - **Formatter:** Prettier + ESLint
 
 ### Database
@@ -302,7 +302,7 @@ module kasiraiai/backend
 go 1.21
 
 require (
-    github.com/gin-gonic/gin v1.9.1
+    github.com/gin-gonic/gin v1.12.0
     github.com/gin-contrib/cors v1.5.0
     github.com/jackc/pgx/v5 v5.5.4
     github.com/golang-migrate/migrate/v4 v4.17.0
@@ -322,7 +322,7 @@ require (
 {
   "dependencies": {
     "vue": "^3.4.0",
-    "vue-router": "^4.3.0",
+    "vue-router": "^5.1.0",
     "pinia": "^2.1.0",
     "axios": "^1.6.0",
     "primevue": "^4.0.0",
