@@ -9,11 +9,11 @@ const props = defineProps({
   score: { type: Number, default: 0 },
 });
 
-const levelColor = computed(() => {
-  if (props.score >= 80) return "#10b981";
-  if (props.score >= 60) return "#0071e3";
-  if (props.score >= 40) return "#f59e0b";
-  return "#ef4444";
+const levelConfig = computed(() => {
+  if (props.score >= 80) return { color: "#10b981", label: "Sangat Baik", desc: "Siap mengajukan KUR" };
+  if (props.score >= 60) return { color: "#3b82f6", label: "Baik", desc: "Siap dengan persiapan tambahan" };
+  if (props.score >= 40) return { color: "#f59e0b", label: "Sedang", desc: "Tingkatkan konsistensi" };
+  return { color: "#ef4444", label: "Rendah", desc: "Fokus pada pencatatan rutin" };
 });
 
 const chartConfig = computed(() => ({
@@ -23,68 +23,86 @@ const chartConfig = computed(() => ({
     datasets: [
       {
         data: [props.score, 100 - props.score],
-        backgroundColor: [levelColor.value, "#f0f0f0"],
+        backgroundColor: [levelConfig.value.color, "rgba(226, 232, 240, 0.5)"],
         borderWidth: 0,
         circumference: 270,
         rotation: 225,
-        cutout: "75%",
+        cutout: "78%",
       },
     ],
   },
   options: {
+    cutout: "78%",
     plugins: {
       tooltip: { enabled: false },
     },
   },
 }));
-
-const levelLabel = computed(() => {
-  if (props.score >= 80) return "Sangat Baik";
-  if (props.score >= 60) return "Baik";
-  if (props.score >= 40) return "Sedang";
-  return "Rendah";
-});
 </script>
 
 <template>
   <div
-    class="text-center p-4"
     style="
-      background: var(--color-pure-white);
-      border-radius: var(--radius-md);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
     "
   >
-    <h3 class="text-base m-0 mb-4" style="font-weight: 600; color: var(--color-near-black)">
+    <h3
+      style="
+        margin: 0 0 16px; font-size: 15px; font-weight: 600;
+        color: var(--color-text);
+      "
+    >
       Skor Kesiapan KUR
     </h3>
-    <div style="position: relative; width: 200px; height: 140px; margin: 0 auto">
+
+    <div style="position: relative; width: 180px; height: 130px; margin: 0 auto">
       <Doughnut :data="chartConfig.data" :options="chartConfig.options" />
       <div
         style="
-          position: absolute;
-          top: 55%;
-          left: 50%;
+          position: absolute; top: 55%; left: 50%;
           transform: translate(-50%, -50%);
           text-align: center;
         "
       >
         <p
-          class="text-3xl m-0"
-          :style="{ fontWeight: 700, color: levelColor }"
+          style="
+            margin: 0; font-size: 36px; font-weight: 800;
+            letter-spacing: -0.03em; line-height: 1;
+          "
+          :style="{ color: levelConfig.color }"
         >
           {{ score }}
         </p>
-        <p class="text-xs m-0" style="color: var(--color-text-secondary)">
+        <p
+          style="
+            margin: 2px 0 0; font-size: 12px;
+            color: var(--color-text-tertiary);
+          "
+        >
           / 100
         </p>
       </div>
     </div>
+
     <p
-      class="text-sm mt-2 mb-0"
-      :style="{ fontWeight: 600, color: levelColor }"
+      style="
+        margin: 12px 0 4px; font-size: 16px; font-weight: 700;
+      "
+      :style="{ color: levelConfig.color }"
     >
-      {{ levelLabel }}
+      {{ levelConfig.label }}
+    </p>
+    <p
+      style="
+        margin: 0; font-size: 12px; color: var(--color-text-secondary);
+      "
+    >
+      {{ levelConfig.desc }}
     </p>
   </div>
 </template>

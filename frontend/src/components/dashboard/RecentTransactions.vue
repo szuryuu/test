@@ -8,61 +8,118 @@ defineProps({
 
 <template>
   <div
-    class="p-4"
     style="
-      background: var(--color-pure-white);
-      border-radius: var(--radius-md);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
     "
   >
-    <h3 class="text-base m-0 mb-3" style="font-weight: 600; color: var(--color-near-black)">
-      Transaksi Terbaru
-    </h3>
-
-    <div v-if="!transactions.length" class="py-4 text-center" style="color: var(--color-text-secondary)">
-      <p class="text-sm m-0">Belum ada transaksi</p>
+    <div
+      style="
+        display: flex; justify-content: space-between;
+        align-items: center; margin-bottom: 16px;
+      "
+    >
+      <h3
+        style="
+          margin: 0; font-size: 15px; font-weight: 600;
+          color: var(--color-text);
+        "
+      >
+        Transaksi Terbaru
+      </h3>
+      <span
+        style="
+          font-size: 11px; color: var(--color-text-tertiary);
+        "
+      >
+        {{ transactions.length }} transaksi
+      </span>
     </div>
 
-    <div v-else class="flex flex-column gap-2">
+    <!-- Empty state -->
+    <div
+      v-if="!transactions.length"
+      style="text-align: center; padding: 24px 0"
+    >
+      <div
+        style="
+          width: 48px; height: 48px; border-radius: 12px;
+          background: var(--color-bg); margin: 0 auto 10px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 20px; color: var(--color-text-tertiary);
+        "
+      >
+        <i class="pi pi-inbox" />
+      </div>
+      <p style="font-size: 14px; color: var(--color-text-secondary); margin: 0">
+        Belum ada transaksi
+      </p>
+      <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 4px 0 0">
+        Kirim pesan via WhatsApp untuk memulai
+      </p>
+    </div>
+
+    <!-- Transaction list -->
+    <div v-else style="display: flex; flex-direction: column; gap: 2px">
       <div
         v-for="tx in transactions.slice(0, 5)"
         :key="tx.id"
-        class="flex align-items-center justify-content-between py-2"
-        style="border-bottom: 1px solid var(--color-border-soft)"
+        style="
+          display: flex; align-items: center; gap: 12px;
+          padding: 10px 8px; border-radius: 8px;
+          transition: background 0.15s ease;
+        "
+        @mouseenter="$event.target.style.background = 'var(--color-bg)'"
+        @mouseleave="$event.target.style.background = 'transparent'"
       >
-        <div class="flex align-items-center gap-3">
-          <div
-            class="flex align-items-center justify-content-center"
-            style="
-              width: 36px;
-              height: 36px;
-              border-radius: var(--radius-sm);
-              font-size: 14px;
-            "
-            :style="{
-              background: tx.type === 'income' ? '#ecfdf5' : '#fef2f2',
-              color: tx.type === 'income' ? '#10b981' : '#ef4444',
-            }"
-          >
-            {{ tx.type === "income" ? "↓" : "↑" }}
-          </div>
-          <div>
-            <p class="text-sm m-0" style="font-weight: 500; color: var(--color-near-black)">
-              {{ tx.description }}
-            </p>
-            <p class="text-xs m-0" style="color: var(--color-text-secondary)">
-              {{ formatDate(tx.transaction_date) }}
-            </p>
-          </div>
-        </div>
-        <span
-          class="text-sm"
+        <!-- Type icon -->
+        <div
+          style="
+            width: 36px; height: 36px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; flex-shrink: 0;
+          "
           :style="{
-            fontWeight: 600,
-            color: tx.type === 'income' ? '#10b981' : '#ef4444',
+            background: tx.type === 'income' ? 'var(--color-income-bg)' : 'var(--color-expense-bg)',
+            color: tx.type === 'income' ? 'var(--color-income)' : 'var(--color-expense)',
           }"
         >
-          {{ tx.type === "income" ? "+" : "-" }}{{ formatRupiah(tx.amount) }}
+          <i :class="tx.type === 'income' ? 'pi pi-arrow-down' : 'pi pi-arrow-up'" />
+        </div>
+
+        <!-- Description + date -->
+        <div style="flex: 1; min-width: 0">
+          <p
+            style="
+              margin: 0; font-size: 13px; font-weight: 500;
+              color: var(--color-text);
+              overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            "
+          >
+            {{ tx.description }}
+          </p>
+          <p
+            style="
+              margin: 0; font-size: 11px; color: var(--color-text-tertiary);
+            "
+          >
+            {{ formatDate(tx.transaction_date) }}
+          </p>
+        </div>
+
+        <!-- Amount -->
+        <span
+          style="
+            font-size: 13px; font-weight: 600; white-space: nowrap;
+          "
+          :style="{
+            color: tx.type === 'income' ? 'var(--color-income)' : 'var(--color-expense)',
+          }"
+        >
+          {{ tx.type === "income" ? "+" : "−" }}{{ formatRupiah(tx.amount) }}
         </span>
       </div>
     </div>

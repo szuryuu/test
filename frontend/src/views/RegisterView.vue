@@ -49,134 +49,192 @@ async function handleRegister() {
 
 <template>
   <div
-    class="flex align-items-center justify-content-center min-h-screen py-4"
-    style="background: var(--color-pale-gray)"
+    style="
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f6f8fa 0%, #e9edf2 100%);
+      padding: 24px 16px;
+    "
   >
+    <!-- Auth card -->
     <div
-      class="w-full px-4"
-      style="max-width: 440px"
+      style="
+        width: 100%; max-width: 460px;
+        background: var(--color-surface);
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08), 0 8px 24px rgba(15, 23, 42, 0.04);
+        overflow: hidden;
+      "
     >
-      <!-- Brand -->
-      <div class="text-center mb-5">
-        <h1
-          class="text-3xl m-0 mb-2"
-          style="font-weight: 700; color: var(--color-near-black); letter-spacing: -0.03em"
+      <!-- Brand header -->
+      <div
+        style="
+          padding: 28px 32px 0;
+          text-align: center;
+        "
+      >
+        <h2
+          style="
+            margin: 0 0 4px; font-size: 22px; font-weight: 700;
+            color: var(--color-text); letter-spacing: -0.03em;
+          "
         >
-          Daftar Kasir<span style="color: var(--color-apple-blue)">AI</span>
-        </h1>
-        <p class="m-0" style="color: var(--color-text-secondary); font-size: 15px">
+          Daftar Kasir<span style="color: #10b981">AI</span>
+        </h2>
+        <p
+          style="
+            margin: 0 0 20px; font-size: 14px;
+            color: var(--color-text-secondary);
+          "
+        >
           Mulai catat keuangan UMKM Anda
         </p>
       </div>
 
-      <!-- Card -->
-      <div
-        class="p-5"
-        style="
-          background: var(--color-pure-white);
-          border-radius: var(--radius-md);
-          box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        "
-      >
+      <!-- Form -->
+      <div style="padding: 0 32px 28px">
+        <!-- Error -->
         <div
           v-if="errorMsg"
-          class="px-4 py-3 mb-4"
           style="
-            background: #fef2f2;
-            color: #dc2626;
-            border-radius: var(--radius-sm);
-            font-size: 13px;
+            padding: 12px 16px; margin-bottom: 20px;
+            background: var(--color-expense-bg);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 10px;
+            display: flex; align-items: flex-start; gap: 10px;
           "
         >
-          {{ errorMsg }}
+          <i class="pi pi-exclamation-circle" style="color: var(--color-expense); font-size: 16px; margin-top: 1px; flex-shrink: 0" />
+          <p style="margin: 0; font-size: 13px; color: #dc2626; line-height: 1.4">
+            {{ errorMsg }}
+          </p>
         </div>
 
-        <div class="flex flex-column gap-3">
-          <div class="flex flex-column gap-2">
-            <label class="text-sm" style="font-weight: 500; color: var(--color-near-black)">
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+          "
+        >
+          <div
+            style="display: flex; flex-direction: column; gap: 6px; grid-column: span 2"
+          >
+            <label style="font-size: 13px; font-weight: 500; color: var(--color-text)">
               Nama Lengkap
             </label>
             <input
               v-model="form.name"
               type="text"
               placeholder="Budi Santoso"
-              class="w-full px-4 py-3 text-sm"
               style="
-                background: var(--color-pale-gray);
-                border: 1px solid var(--color-border-soft);
-                border-radius: var(--radius-sm);
-                color: var(--color-near-black);
+                width: 100%; padding: 11px 14px; font-size: 14px; font-family: inherit;
+                background: var(--color-bg);
+                border: 1px solid var(--color-border);
+                border-radius: 10px;
+                color: var(--color-text);
+                transition: all 0.15s ease;
+                outline: none;
               "
+              @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
+              @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
             />
           </div>
 
-          <div class="flex flex-column gap-2">
-            <label class="text-sm" style="font-weight: 500; color: var(--color-near-black)">
+          <div
+            style="display: flex; flex-direction: column; gap: 6px; grid-column: span 2"
+          >
+            <label style="font-size: 13px; font-weight: 500; color: var(--color-text)">
               Nama Usaha
             </label>
             <input
               v-model="form.business_name"
               type="text"
               placeholder="Warung Nasi Budi"
-              class="w-full px-4 py-3 text-sm"
               style="
-                background: var(--color-pale-gray);
-                border: 1px solid var(--color-border-soft);
-                border-radius: var(--radius-sm);
-                color: var(--color-near-black);
+                width: 100%; padding: 11px 14px; font-size: 14px; font-family: inherit;
+                background: var(--color-bg);
+                border: 1px solid var(--color-border);
+                border-radius: 10px;
+                color: var(--color-text);
+                transition: all 0.15s ease;
+                outline: none;
               "
+              @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
+              @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
             />
           </div>
 
-          <div class="flex flex-column gap-2">
-            <label class="text-sm" style="font-weight: 500; color: var(--color-near-black)">
+          <div
+            style="display: flex; flex-direction: column; gap: 6px; grid-column: span 2"
+          >
+            <label style="font-size: 13px; font-weight: 500; color: var(--color-text)">
               Nomor WhatsApp
             </label>
             <input
               v-model="form.phone_number"
               type="text"
               placeholder="6281234567890"
-              class="w-full px-4 py-3 text-sm"
               style="
-                background: var(--color-pale-gray);
-                border: 1px solid var(--color-border-soft);
-                border-radius: var(--radius-sm);
-                color: var(--color-near-black);
+                width: 100%; padding: 11px 14px; font-size: 14px; font-family: inherit;
+                background: var(--color-bg);
+                border: 1px solid var(--color-border);
+                border-radius: 10px;
+                color: var(--color-text);
+                transition: all 0.15s ease;
+                outline: none;
               "
+              @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
+              @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
             />
           </div>
 
-          <div class="flex flex-column gap-2">
-            <label class="text-sm" style="font-weight: 500; color: var(--color-near-black)">
+          <div
+            style="display: flex; flex-direction: column; gap: 6px; grid-column: span 2"
+          >
+            <label style="font-size: 13px; font-weight: 500; color: var(--color-text)">
               Password
             </label>
             <input
               v-model="form.password"
               type="password"
               placeholder="Minimal 6 karakter"
-              class="w-full px-4 py-3 text-sm"
               style="
-                background: var(--color-pale-gray);
-                border: 1px solid var(--color-border-soft);
-                border-radius: var(--radius-sm);
-                color: var(--color-near-black);
+                width: 100%; padding: 11px 14px; font-size: 14px; font-family: inherit;
+                background: var(--color-bg);
+                border: 1px solid var(--color-border);
+                border-radius: 10px;
+                color: var(--color-text);
+                transition: all 0.15s ease;
+                outline: none;
               "
+              @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
+              @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
             />
           </div>
 
-          <div class="flex flex-column gap-2">
-            <label class="text-sm" style="font-weight: 500; color: var(--color-near-black)">
-              Jenis Usaha <span style="color: var(--color-text-secondary); font-weight: 400">(opsional)</span>
+          <div
+            style="display: flex; flex-direction: column; gap: 6px; grid-column: span 2"
+          >
+            <label style="font-size: 13px; font-weight: 500; color: var(--color-text)">
+              Jenis Usaha
+              <span style="font-weight: 400; color: var(--color-text-tertiary)">(opsional)</span>
             </label>
             <select
               v-model="form.business_type"
-              class="w-full px-4 py-3 text-sm"
               style="
-                background: var(--color-pale-gray);
-                border: 1px solid var(--color-border-soft);
-                border-radius: var(--radius-sm);
-                color: var(--color-near-black);
+                width: 100%; padding: 11px 14px; font-size: 14px; font-family: inherit;
+                background: var(--color-bg);
+                border: 1px solid var(--color-border);
+                border-radius: 10px;
+                color: var(--color-text);
+                cursor: pointer; transition: all 0.15s ease;
+                outline: none;
               "
+              @focus="$event.target.style.borderColor = 'var(--color-brand-500)'"
+              @blur="$event.target.style.borderColor = 'var(--color-border)'"
             >
               <option value="">-- Pilih jenis usaha --</option>
               <option v-for="bt in businessTypes" :key="bt.value" :value="bt.value">
@@ -184,34 +242,56 @@ async function handleRegister() {
               </option>
             </select>
           </div>
-
-          <button
-            @click="handleRegister"
-            :disabled="isLoading"
-            class="w-full py-3 mt-2 cursor-pointer text-sm transition-all transition-duration-200"
-            style="
-              background: var(--color-apple-blue);
-              color: var(--color-pure-white);
-              border: none;
-              border-radius: var(--radius-sm);
-              font-weight: 600;
-              opacity: isLoading ? 0.7 : 1;
-            "
-          >
-            {{ isLoading ? "Mendaftarkan..." : "Daftar" }}
-          </button>
         </div>
 
-        <p class="text-center mt-4 mb-0 text-sm" style="color: var(--color-text-secondary)">
-          Sudah punya akun?
-          <router-link
-            to="/login"
-            style="color: var(--color-apple-blue); font-weight: 500"
-          >
-            Masuk
-          </router-link>
-        </p>
+        <button
+          @click="handleRegister"
+          :disabled="isLoading"
+          style="
+            width: 100%; padding: 12px; margin-top: 20px;
+            font-size: 15px; font-weight: 600; font-family: inherit;
+            border: none; border-radius: 10px; cursor: pointer;
+            transition: all 0.2s ease;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+          "
+          :style="{ opacity: isLoading ? 0.7 : 1 }"
+          @mouseenter="!isLoading && ($event.target.style.boxShadow = '0 4px 16px rgba(16, 185, 129, 0.35)')"
+          @mouseleave="!isLoading && ($event.target.style.boxShadow = 'none')"
+        >
+          <i v-if="isLoading" class="pi pi-spin pi-spinner" style="margin-right: 8px" />
+          {{ isLoading ? "Mendaftarkan..." : "Daftar" }}
+        </button>
+
+        <div
+          style="
+            text-align: center; margin-top: 20px; padding-top: 16px;
+            border-top: 1px solid var(--color-border-light);
+          "
+        >
+          <p style="margin: 0; font-size: 14px; color: var(--color-text-secondary)">
+            Sudah punya akun?
+            <router-link
+              to="/login"
+              style="
+                color: #10b981; font-weight: 600; text-decoration: none;
+              "
+              @mouseenter="$event.target.style.textDecoration = 'underline'"
+              @mouseleave="$event.target.style.textDecoration = 'none'"
+            >
+              Masuk
+            </router-link>
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+@media (max-width: 480px) {
+  div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>

@@ -32,129 +32,197 @@ async function handleLogin() {
 
 <template>
   <div
-    class="flex align-items-center justify-content-center min-h-screen"
-    style="background: var(--color-pale-gray)"
+    style="
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f6f8fa 0%, #e9edf2 100%);
+      padding: 24px 16px;
+    "
   >
+    <!-- Auth card -->
     <div
-      class="w-full px-4"
-      style="max-width: 400px"
+      style="
+        width: 100%; max-width: 420px;
+        background: var(--color-surface);
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08), 0 8px 24px rgba(15, 23, 42, 0.04);
+        overflow: hidden;
+      "
     >
-      <!-- Brand -->
-      <div class="text-center mb-6">
-        <h1
-          class="text-4xl m-0 mb-2"
-          style="font-weight: 700; color: var(--color-near-black); letter-spacing: -0.03em"
+      <!-- Brand header -->
+      <div
+        style="
+          padding: 32px 32px 0;
+          text-align: center;
+        "
+      >
+        <div
+          style="
+            width: 56px; height: 56px; border-radius: 14px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 28px; color: white; font-weight: 800;
+          "
         >
-          Kasir<span style="color: var(--color-apple-blue)">AI</span>
+          K
+        </div>
+        <h1
+          style="
+            margin: 0 0 4px; font-size: 24px; font-weight: 700;
+            color: var(--color-text); letter-spacing: -0.03em;
+          "
+        >
+          Kasir<span style="color: #10b981">AI</span>
         </h1>
-        <p class="m-0" style="color: var(--color-text-secondary); font-size: 15px">
+        <p
+          style="
+            margin: 0 0 24px; font-size: 14px;
+            color: var(--color-text-secondary);
+          "
+        >
           Catat keuangan UMKM via WhatsApp
         </p>
       </div>
 
-      <!-- Card -->
-      <div
-        class="p-5"
-        style="
-          background: var(--color-pure-white);
-          border-radius: var(--radius-md);
-          box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        "
-      >
-        <h2 class="text-xl m-0 mb-4" style="font-weight: 600; color: var(--color-near-black)">
-          Masuk
-        </h2>
-
+      <!-- Form -->
+      <div style="padding: 0 32px 32px">
         <!-- Error -->
         <div
           v-if="errorMsg"
-          class="px-4 py-3 mb-4 text-sm"
           style="
-            background: #fef2f2;
-            color: #dc2626;
-            border-radius: var(--radius-sm);
-            font-size: 13px;
+            padding: 12px 16px; margin-bottom: 20px;
+            background: var(--color-expense-bg);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 10px;
+            display: flex; align-items: flex-start; gap: 10px;
           "
         >
-          {{ errorMsg }}
+          <i class="pi pi-exclamation-circle" style="color: var(--color-expense); font-size: 16px; margin-top: 1px; flex-shrink: 0" />
+          <p style="margin: 0; font-size: 13px; color: #dc2626; line-height: 1.4">
+            {{ errorMsg }}
+          </p>
         </div>
 
-        <!-- Form -->
-        <div class="flex flex-column gap-4">
-          <div class="flex flex-column gap-2">
+        <div style="display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
             <label
               for="phone"
-              class="text-sm"
-              style="font-weight: 500; color: var(--color-near-black)"
+              style="font-size: 13px; font-weight: 500; color: var(--color-text)"
             >
               Nomor WhatsApp
             </label>
-            <input
-              id="phone"
-              v-model="phoneNumber"
-              type="text"
-              placeholder="6281234567890"
-              class="w-full px-4 py-3 text-sm border-none outline-none transition-all transition-duration-200"
-              style="
-                background: var(--color-pale-gray);
-                color: var(--color-near-black);
-                border-radius: var(--radius-sm);
-                border: 1px solid var(--color-border-soft);
-              "
-              @keyup.enter="handleLogin"
-            />
+            <div style="position: relative">
+              <i
+                class="pi pi-phone"
+                style="
+                  position: absolute; left: 14px; top: 50%;
+                  transform: translateY(-50%); font-size: 14px;
+                  color: var(--color-text-tertiary);
+                "
+              />
+              <input
+                id="phone"
+                v-model="phoneNumber"
+                type="text"
+                placeholder="6281234567890"
+                style="
+                  width: 100%; padding: 12px 12px 12px 44px;
+                  font-size: 14px; font-family: inherit;
+                  background: var(--color-bg);
+                  border: 1px solid var(--color-border);
+                  border-radius: 10px;
+                  color: var(--color-text);
+                  transition: all 0.15s ease;
+                  outline: none;
+                "
+                @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
+                @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
+                @keyup.enter="handleLogin"
+              />
+            </div>
           </div>
 
-          <div class="flex flex-column gap-2">
+          <div style="display: flex; flex-direction: column; gap: 6px">
             <label
               for="password"
-              class="text-sm"
-              style="font-weight: 500; color: var(--color-near-black)"
+              style="font-size: 13px; font-weight: 500; color: var(--color-text)"
             >
               Password
             </label>
-            <input
-              id="password"
-              v-model="password"
-              type="password"
-              placeholder="••••••"
-              class="w-full px-4 py-3 text-sm border-none outline-none transition-all transition-duration-200"
-              style="
-                background: var(--color-pale-gray);
-                color: var(--color-near-black);
-                border-radius: var(--radius-sm);
-                border: 1px solid var(--color-border-soft);
-              "
-              @keyup.enter="handleLogin"
-            />
+            <div style="position: relative">
+              <i
+                class="pi pi-lock"
+                style="
+                  position: absolute; left: 14px; top: 50%;
+                  transform: translateY(-50%); font-size: 14px;
+                  color: var(--color-text-tertiary);
+                "
+              />
+              <input
+                id="password"
+                v-model="password"
+                type="password"
+                placeholder="Masukkan password"
+                style="
+                  width: 100%; padding: 12px 12px 12px 44px;
+                  font-size: 14px; font-family: inherit;
+                  background: var(--color-bg);
+                  border: 1px solid var(--color-border);
+                  border-radius: 10px;
+                  color: var(--color-text);
+                  transition: all 0.15s ease;
+                  outline: none;
+                "
+                @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
+                @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
+                @keyup.enter="handleLogin"
+              />
+            </div>
           </div>
 
           <button
             @click="handleLogin"
             :disabled="isLoading"
-            class="w-full py-3 cursor-pointer text-sm transition-all transition-duration-200"
             style="
-              background: var(--color-apple-blue);
-              color: var(--color-pure-white);
-              border: none;
-              border-radius: var(--radius-sm);
-              font-weight: 600;
-              opacity: isLoading ? 0.7 : 1;
+              width: 100%; padding: 12px; margin-top: 4px;
+              font-size: 15px; font-weight: 600; font-family: inherit;
+              border: none; border-radius: 10px; cursor: pointer;
+              transition: all 0.2s ease;
+              background: linear-gradient(135deg, #10b981, #059669);
+              color: white;
             "
+            :style="{ opacity: isLoading ? 0.7 : 1 }"
+            @mouseenter="!isLoading && ($event.target.style.boxShadow = '0 4px 16px rgba(16, 185, 129, 0.35)')"
+            @mouseleave="!isLoading && ($event.target.style.boxShadow = 'none')"
           >
+            <i v-if="isLoading" class="pi pi-spin pi-spinner" style="margin-right: 8px" />
             {{ isLoading ? "Memproses..." : "Masuk" }}
           </button>
         </div>
 
-        <p class="text-center mt-4 mb-0 text-sm" style="color: var(--color-text-secondary)">
-          Belum punya akun?
-          <router-link
-            to="/register"
-            style="color: var(--color-apple-blue); font-weight: 500"
-          >
-            Daftar di sini
-          </router-link>
-        </p>
+        <div
+          style="
+            text-align: center; margin-top: 24px; padding-top: 20px;
+            border-top: 1px solid var(--color-border-light);
+          "
+        >
+          <p style="margin: 0; font-size: 14px; color: var(--color-text-secondary)">
+            Belum punya akun?
+            <router-link
+              to="/register"
+              style="
+                color: #10b981; font-weight: 600; text-decoration: none;
+              "
+              @mouseenter="$event.target.style.textDecoration = 'underline'"
+              @mouseleave="$event.target.style.textDecoration = 'none'"
+            >
+              Daftar di sini
+            </router-link>
+          </p>
+        </div>
       </div>
     </div>
   </div>
