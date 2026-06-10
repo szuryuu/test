@@ -90,6 +90,15 @@ async function handleDelete(id) {
       </div>
     </div>
 
+    <!-- Error state -->
+    <div
+      v-if="store.error"
+      style="padding: 12px 16px; background: var(--color-expense-bg); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; margin-bottom: 16px; font-size: 13px; color: #dc2626"
+    >
+      <i class="pi pi-exclamation-triangle" style="margin-right: 8px" />
+      {{ store.error }}
+    </div>
+
     <!-- Create form -->
     <div
       v-if="showCreate"

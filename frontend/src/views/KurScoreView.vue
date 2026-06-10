@@ -237,7 +237,9 @@ async function recalculate() {
       </div>
 
       <!-- Right column -->
-      <KurRecommendations :recommendations="score.recommendations || []" />
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <KurRecommendations :recommendations="score.recommendations || []" />
+      </div>
     </div>
   </div>
 </template>
