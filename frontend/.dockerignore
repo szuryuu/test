@@ -1,0 +1,20 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+
+# IDE
+.vscode
+.idea
+
+# Node
+node_modules/
+
+# Environment
+.env
+
+# Build output
+dist/

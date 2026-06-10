@@ -1,0 +1,21 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+
+# IDE
+.vscode
+.idea
+
+# Binaries
+bin/
+*.exe
+
+# Environment
+.env
+
+# Docker volumes
+postgres_data/
