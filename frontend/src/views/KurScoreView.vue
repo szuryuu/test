@@ -45,23 +45,12 @@ async function recalculate() {
 <template>
   <div>
     <!-- Page header -->
-    <div
-      style="
-        display: flex; justify-content: space-between;
-        align-items: flex-start; margin-bottom: 24px;
-        flex-wrap: wrap; gap: 12px;
-      "
-    >
+    <div class="flex justify-between items-start mb-[24px] flex-wrap gap-[12px]">
       <div>
-        <h1
-          style="
-            margin: 0 0 4px; font-size: 24px; font-weight: 700;
-            color: var(--color-text); letter-spacing: -0.02em;
-          "
-        >
+        <h1 class="m-0 mb-[4px] text-[24px] font-bold text-[var(--color-text)] tracking-[-0.02em]">
           Skor KUR
         </h1>
-        <p style="margin: 0; font-size: 14px; color: var(--color-text-secondary)">
+        <p class="m-0 text-[14px] text-[var(--color-text-secondary)]">
           Skor kesiapan kredit usaha Anda
         </p>
       </div>
@@ -69,49 +58,30 @@ async function recalculate() {
       <button
         @click="recalculate"
         :disabled="isLoading"
-        style="
-          display: flex; align-items: center; gap: 8px;
-          padding: 10px 20px; font-size: 14px; font-weight: 600;
-          font-family: inherit; border: none; border-radius: 10px;
-          cursor: pointer; transition: all 0.15s ease;
-          background: linear-gradient(135deg, #10b981, #059669);
-          color: white; opacity: 1;
-        "
+        class="flex items-center gap-[8px] py-[10px] px-[20px] text-[14px] font-semibold font-[inherit] border-0 rounded-[10px] cursor-pointer transition-all duration-[0.15s] ease bg-[linear-gradient(135deg,#10b981,#059669)] text-white"
         :style="{ opacity: isLoading ? 0.7 : 1 }"
         @mouseenter="!isLoading && ($event.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.4)')"
         @mouseleave="!isLoading && ($event.target.style.boxShadow = 'none')"
       >
-        <i
-          class="pi pi-refresh"
-          :class="{ 'pi-spin': isLoading }"
-          style="font-size: 14px"
-        />
+        <i class="pi pi-refresh text-[14px]" :class="{ 'pi-spin': isLoading }" />
         {{ isLoading ? "Menghitung..." : "Hitung Ulang" }}
       </button>
     </div>
 
     <!-- Loading state -->
-    <div
-      v-if="isLoading && !score"
-      style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
-    >
-      <div class="skeleton" style="height: 300px; border-radius: var(--radius-card)" />
-      <div class="skeleton" style="height: 300px; border-radius: var(--radius-card)" />
+    <div v-if="isLoading && !score" class="grid grid-cols-2 gap-[16px]">
+      <div class="skeleton h-[300px] rounded-[var(--radius-card)]" />
+      <div class="skeleton h-[300px] rounded-[var(--radius-card)]" />
     </div>
 
     <!-- Error state -->
     <div
       v-if="error"
-      style="
-        padding: 16px 20px; background: var(--color-expense-bg);
-        border: 1px solid rgba(239, 68, 68, 0.2);
-        border-radius: var(--radius-card); margin-bottom: 16px;
-        display: flex; align-items: flex-start; gap: 12px;
-      "
+      class="p-[16px_20px] bg-[var(--color-expense-bg)] border border-[rgba(239,68,68,0.2)] rounded-[var(--radius-card)] mb-[16px] flex items-start gap-[12px]"
     >
-      <i class="pi pi-exclamation-triangle" style="color: var(--color-expense); font-size: 18px; margin-top: 1px" />
+      <i class="pi pi-exclamation-triangle text-[var(--color-expense)] text-[18px] mt-[1px]" />
       <div>
-        <p style="margin: 0; font-size: 14px; font-weight: 500; color: #dc2626">
+        <p class="m-0 text-[14px] font-medium text-[#dc2626]">
           {{ error }}
         </p>
       </div>
@@ -120,100 +90,51 @@ async function recalculate() {
     <!-- Empty state -->
     <div
       v-if="!score && !isLoading && !error"
-      style="
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow-card);
-        padding: 48px 24px; text-align: center;
-      "
+      class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] shadow-[var(--shadow-card)] py-[48px] px-[24px] text-center"
     >
       <div
-        style="
-          width: 64px; height: 64px; border-radius: 16px;
-          background: var(--color-bg); margin: 0 auto 16px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 28px; color: var(--color-text-tertiary);
-        "
+        class="w-[64px] h-[64px] rounded-[16px] bg-[var(--color-bg)] mx-auto mb-[16px] flex items-center justify-center text-[28px] text-[var(--color-text-tertiary)]"
       >
         <i class="pi pi-star" />
       </div>
-      <h3
-        style="
-          margin: 0 0 8px; font-size: 18px; font-weight: 600;
-          color: var(--color-text);
-        "
-      >
+      <h3 class="m-0 mb-[8px] text-[18px] font-semibold text-[var(--color-text)]">
         Belum Ada Data Skor
       </h3>
-      <p
-        style="
-          margin: 0 auto 20px; font-size: 14px; color: var(--color-text-secondary);
-          max-width: 360px; line-height: 1.6;
-        "
-      >
+      <p class="mx-auto mb-[20px] text-[14px] text-[var(--color-text-secondary)] max-w-[360px] leading-[1.6]">
         Tambahkan transaksi terlebih dahulu melalui WhatsApp atau halaman Transaksi, lalu hitung ulang skor KUR Anda.
       </p>
       <router-link
         to="/transactions"
-        style="
-          display: inline-flex; align-items: center; gap: 8px;
-          padding: 10px 20px; font-size: 14px; font-weight: 600;
-          font-family: inherit; border: none; border-radius: 10px;
-          cursor: pointer; text-decoration: none; transition: all 0.15s ease;
-          background: linear-gradient(135deg, #10b981, #059669);
-          color: white;
-        "
+        class="inline-flex items-center gap-[8px] py-[10px] px-[20px] text-[14px] font-semibold font-[inherit] border-0 rounded-[10px] cursor-pointer no-underline transition-all duration-[0.15s] ease bg-[linear-gradient(135deg,#10b981,#059669)] text-white"
       >
-        <i class="pi pi-arrow-right" style="font-size: 14px" />
+        <i class="pi pi-arrow-right text-[14px]" />
         Ke Halaman Transaksi
       </router-link>
     </div>
 
     <!-- Score data -->
-    <div
-      v-if="score"
-      style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
-    >
+    <div v-if="score" class="score-grid grid grid-cols-2 gap-[16px]">
       <!-- Staleness warning -->
       <div
         v-if="score.is_stale"
-        style="grid-column: 1 / -1;
-          padding: 12px 16px;
-          background: rgba(245, 158, 11, 0.08);
-          border: 1px solid rgba(245, 158, 11, 0.25);
-          border-radius: var(--radius-card);
-          display: flex; align-items: center; gap: 10px;
-          font-size: 13px; color: #92400e;
-        "
+        class="col-span-2 p-[12px_16px] bg-[rgba(245,158,11,0.08)] border border-[rgba(245,158,11,0.25)] rounded-[var(--radius-card)] flex items-center gap-[10px] text-[13px] text-[#92400e]"
       >
-        <i class="pi pi-clock" style="font-size: 16px; flex-shrink: 0" />
+        <i class="pi pi-clock text-[16px] shrink-0" />
         <span>Data mungkin sudah tidak akurat. Klik <strong>"Hitung Ulang"</strong> untuk memperbarui.</span>
       </div>
 
       <!-- Left column -->
-      <div style="display: flex; flex-direction: column; gap: 16px">
+      <div class="flex flex-col gap-[16px]">
         <KurScoreGauge :score="score.score || 0" />
 
         <div
-          style="
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-card);
-            padding: 20px;
-            box-shadow: var(--shadow-card);
-          "
+          class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] p-[20px] shadow-[var(--shadow-card)]"
         >
-          <h3
-            style="
-              margin: 0 0 16px; font-size: 15px; font-weight: 600;
-              color: var(--color-text);
-            "
-          >
+          <h3 class="m-0 mb-[16px] text-[15px] font-semibold text-[var(--color-text)]">
             Detail Skor
           </h3>
 
-          <div style="display: flex; flex-direction: column; gap: 0">
+          <div class="flex flex-col">
             <div
               v-for="(item, i) in [
                 { label: 'Rata-rata Pemasukan/Bulan', value: formatRupiah(score.monthly_income_avg) },
@@ -223,17 +144,14 @@ async function recalculate() {
                 { label: 'Bulan Data Tersedia', value: `${score.months_of_data} bulan` },
               ]"
               :key="i"
-              style="
-                display: flex; justify-content: space-between;
-                align-items: center; padding: 10px 0;
-              "
+              class="flex justify-between items-center py-[10px]"
               :style="{ borderBottom: i < 4 ? '1px solid var(--color-border-light)' : 'none' }"
             >
-              <span style="font-size: 13px; color: var(--color-text-secondary)">
+              <span class="text-[13px] text-[var(--color-text-secondary)]">
                 {{ item.label }}
               </span>
               <span
-                style="font-size: 13px; font-weight: 600;"
+                class="text-[13px] font-semibold"
                 :style="{ color: item.color || 'var(--color-text)' }"
               >
                 {{ item.value }}
@@ -243,9 +161,9 @@ async function recalculate() {
 
           <div
             v-if="score.calculated_at"
-            style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--color-border-light)"
+            class="mt-[12px] pt-[12px] border-t border-[var(--color-border-light)]"
           >
-            <p style="margin: 0; font-size: 11px; color: var(--color-text-tertiary)">
+            <p class="m-0 text-[11px] text-[var(--color-text-tertiary)]">
               Terakhir dihitung: {{ new Date(score.calculated_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }}
             </p>
           </div>
@@ -253,7 +171,7 @@ async function recalculate() {
       </div>
 
       <!-- Right column -->
-      <div style="display: flex; flex-direction: column; gap: 16px">
+      <div class="flex flex-col gap-[16px]">
         <KurRecommendations :recommendations="score.recommendations || []" />
       </div>
     </div>
@@ -262,7 +180,7 @@ async function recalculate() {
 
 <style scoped>
 @media (max-width: 768px) {
-  div[style*="grid-template-columns: 1fr 1fr"] {
+  .score-grid {
     grid-template-columns: 1fr !important;
   }
 }
