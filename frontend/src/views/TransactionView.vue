@@ -49,42 +49,24 @@ async function handleDelete(id) {
 <template>
   <div>
     <!-- Page header -->
-    <div
-      style="
-        display: flex; justify-content: space-between;
-        align-items: flex-start; margin-bottom: 24px;
-        flex-wrap: wrap; gap: 12px;
-      "
-    >
+    <div class="flex justify-between items-start mb-[24px] flex-wrap gap-[12px]">
       <div>
-        <h1
-          style="
-            margin: 0 0 4px; font-size: 24px; font-weight: 700;
-            color: var(--color-text); letter-spacing: -0.02em;
-          "
-        >
+        <h1 class="m-0 mb-[4px] text-[24px] font-bold text-[var(--color-text)] tracking-[-0.02em]">
           Transaksi
         </h1>
-        <p style="margin: 0; font-size: 14px; color: var(--color-text-secondary)">
+        <p class="m-0 text-[14px] text-[var(--color-text-secondary)]">
           {{ store.total }} transaksi tercatat
         </p>
       </div>
 
-      <div style="display: flex; gap: 8px">
+      <div class="flex gap-[8px]">
         <button
           @click="showCreate = !showCreate"
-          style="
-            display: flex; align-items: center; gap: 8px;
-            padding: 10px 20px; font-size: 14px; font-weight: 600;
-            font-family: inherit; border: none; border-radius: 10px;
-            cursor: pointer; transition: all 0.15s ease;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-          "
+          class="flex items-center gap-[8px] py-[10px] px-[20px] text-[14px] font-semibold font-[inherit] border-0 rounded-[10px] cursor-pointer transition-all duration-[0.15s] ease bg-[linear-gradient(135deg,#10b981,#059669)] text-white"
           @mouseenter="$event.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.4)'"
           @mouseleave="$event.target.style.boxShadow = 'none'"
         >
-          <i class="pi pi-plus" style="font-size: 14px" />
+          <i class="pi pi-plus text-[14px]" />
           Tambah Transaksi
         </button>
       </div>
@@ -93,69 +75,38 @@ async function handleDelete(id) {
     <!-- Error state -->
     <div
       v-if="store.error"
-      style="padding: 12px 16px; background: var(--color-expense-bg); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; margin-bottom: 16px; font-size: 13px; color: #dc2626"
+      class="p-[12px_16px] bg-[var(--color-expense-bg)] border border-[rgba(239,68,68,0.2)] rounded-[10px] mb-[16px] text-[13px] text-[#dc2626]"
     >
-      <i class="pi pi-exclamation-triangle" style="margin-right: 8px" />
+      <i class="pi pi-exclamation-triangle mr-[8px]" />
       {{ store.error }}
     </div>
 
     <!-- Create form -->
     <div
       v-if="showCreate"
-      style="
-        margin-bottom: 20px; padding: 20px;
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow-elevated);
-      "
+      class="mb-[20px] p-[20px] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] shadow-[var(--shadow-elevated)]"
     >
-      <div
-        style="
-          display: flex; justify-content: space-between;
-          align-items: center; margin-bottom: 16px;
-        "
-      >
-        <h3
-          style="
-            margin: 0; font-size: 15px; font-weight: 600;
-            color: var(--color-text);
-          "
-        >
-          <i class="pi pi-plus-circle" style="margin-right: 8px; color: var(--color-brand-500)" />
+      <div class="flex justify-between items-center mb-[16px]">
+        <h3 class="m-0 text-[15px] font-semibold text-[var(--color-text)]">
+          <i class="pi pi-plus-circle mr-[8px] text-[var(--color-brand-500)]" />
           Catat Transaksi Manual
         </h3>
         <button
           @click="showCreate = false"
-          style="
-            background: transparent; border: none; cursor: pointer;
-            font-size: 18px; color: var(--color-text-tertiary);
-            padding: 4px;
-          "
+          class="bg-transparent border-0 cursor-pointer text-[18px] text-[var(--color-text-tertiary)] p-[4px]"
         >
           <i class="pi pi-times" />
         </button>
       </div>
 
-      <div
-        style="
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-          margin-bottom: 12px;
-        "
-      >
-        <div style="display: flex; flex-direction: column; gap: 6px">
-          <label style="font-size: 12px; font-weight: 500; color: var(--color-text-secondary)">
+      <div class="create-form-grid-type grid grid-cols-2 gap-[12px] mb-[12px]">
+        <div class="flex flex-col gap-[6px]">
+          <label class="text-[12px] font-medium text-[var(--color-text-secondary)]">
             Jumlah (Rp)
           </label>
-          <div style="position: relative">
+          <div class="relative">
             <span
-              style="
-                position: absolute; left: 12px; top: 50%;
-                transform: translateY(-50%);
-                font-size: 13px; color: var(--color-text-tertiary);
-              "
+              class="absolute left-[12px] top-[50%] -translate-y-1/2 text-[13px] text-[var(--color-text-tertiary)]"
             >
               Rp
             </span>
@@ -163,31 +114,21 @@ async function handleDelete(id) {
               v-model="newTx.amount"
               type="number"
               placeholder="50000"
-              style="
-                width: 100%; padding: 10px 12px 10px 36px;
-                font-size: 14px; font-family: inherit;
-                border: 1px solid var(--color-border); border-radius: 8px;
-                background: var(--color-bg); color: var(--color-text);
-                transition: border-color 0.15s ease;
-              "
+              class="w-full pt-[10px] pb-[10px] pr-[12px] pl-[36px] text-[14px] font-[inherit] border border-[var(--color-border)] rounded-[8px] bg-[var(--color-bg)] text-[var(--color-text)] transition-[border-color] duration-[0.15s] ease"
               @focus="$event.target.style.borderColor = 'var(--color-brand-500)'"
               @blur="$event.target.style.borderColor = 'var(--color-border)'"
             />
           </div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 6px">
-          <label style="font-size: 12px; font-weight: 500; color: var(--color-text-secondary)">
+        <div class="flex flex-col gap-[6px]">
+          <label class="text-[12px] font-medium text-[var(--color-text-secondary)]">
             Tipe
           </label>
-          <div style="display: flex; gap: 8px; height: 42px;">
+          <div class="flex gap-[8px] h-[42px]">
             <button
               @click="newTx.type = 'income'"
-              style="
-                flex: 1; border-radius: 8px; font-size: 13px;
-                font-weight: 500; font-family: inherit; cursor: pointer;
-                transition: all 0.15s ease; border: 1px solid var(--color-border);
-              "
+              class="flex-1 rounded-[8px] text-[13px] font-medium font-[inherit] cursor-pointer transition-all duration-[0.15s] ease border"
               :style="{
                 background: newTx.type === 'income' ? 'var(--color-income-bg)' : 'var(--color-surface)',
                 color: newTx.type === 'income' ? 'var(--color-income)' : 'var(--color-text-secondary)',
@@ -198,11 +139,7 @@ async function handleDelete(id) {
             </button>
             <button
               @click="newTx.type = 'expense'"
-              style="
-                flex: 1; border-radius: 8px; font-size: 13px;
-                font-weight: 500; font-family: inherit; cursor: pointer;
-                transition: all 0.15s ease; border: 1px solid var(--color-border);
-              "
+              class="flex-1 rounded-[8px] text-[13px] font-medium font-[inherit] cursor-pointer transition-all duration-[0.15s] ease border"
               :style="{
                 background: newTx.type === 'expense' ? 'var(--color-expense-bg)' : 'var(--color-surface)',
                 color: newTx.type === 'expense' ? 'var(--color-expense)' : 'var(--color-text-secondary)',
@@ -215,76 +152,48 @@ async function handleDelete(id) {
         </div>
       </div>
 
-      <div
-        style="
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          gap: 12px;
-          margin-bottom: 20px;
-        "
-      >
-        <div style="display: flex; flex-direction: column; gap: 6px">
-          <label style="font-size: 12px; font-weight: 500; color: var(--color-text-secondary)">
+      <div class="create-form-grid-details grid grid-cols-[2fr_1fr] gap-[12px] mb-[20px]">
+        <div class="flex flex-col gap-[6px]">
+          <label class="text-[12px] font-medium text-[var(--color-text-secondary)]">
             Deskripsi
           </label>
           <input
             v-model="newTx.description"
             type="text"
             placeholder="Penjualan nasi uduk"
-            style="
-              width: 100%; padding: 10px 12px; font-size: 14px; font-family: inherit;
-              border: 1px solid var(--color-border); border-radius: 8px;
-              background: var(--color-bg); color: var(--color-text);
-              transition: border-color 0.15s ease;
-            "
+            class="w-full py-[10px] px-[12px] text-[14px] font-[inherit] border border-[var(--color-border)] rounded-[8px] bg-[var(--color-bg)] text-[var(--color-text)] transition-[border-color] duration-[0.15s] ease"
             @focus="$event.target.style.borderColor = 'var(--color-brand-500)'"
             @blur="$event.target.style.borderColor = 'var(--color-border)'"
           />
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 6px">
-          <label style="font-size: 12px; font-weight: 500; color: var(--color-text-secondary)">
+        <div class="flex flex-col gap-[6px]">
+          <label class="text-[12px] font-medium text-[var(--color-text-secondary)]">
             Tanggal
           </label>
           <input
             v-model="newTx.transaction_date"
             type="date"
-            style="
-              width: 100%; padding: 10px 12px; font-size: 14px; font-family: inherit;
-              border: 1px solid var(--color-border); border-radius: 8px;
-              background: var(--color-bg); color: var(--color-text);
-              transition: border-color 0.15s ease;
-            "
+            class="w-full py-[10px] px-[12px] text-[14px] font-[inherit] border border-[var(--color-border)] rounded-[8px] bg-[var(--color-bg)] text-[var(--color-text)] transition-[border-color] duration-[0.15s] ease"
             @focus="$event.target.style.borderColor = 'var(--color-brand-500)'"
             @blur="$event.target.style.borderColor = 'var(--color-border)'"
           />
         </div>
       </div>
 
-      <div style="display: flex; gap: 8px">
+      <div class="flex gap-[8px]">
         <button
           @click="handleCreate"
-          style="
-            padding: 10px 24px; font-size: 14px; font-weight: 600;
-            font-family: inherit; border: none; border-radius: 8px;
-            cursor: pointer; transition: all 0.15s ease;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-          "
+          class="py-[10px] px-[24px] text-[14px] font-semibold font-[inherit] border-0 rounded-[8px] cursor-pointer transition-all duration-[0.15s] ease bg-[linear-gradient(135deg,#10b981,#059669)] text-white"
           @mouseenter="$event.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.4)'"
           @mouseleave="$event.target.style.boxShadow = 'none'"
         >
-          <i class="pi pi-check" style="margin-right: 6px" />
+          <i class="pi pi-check mr-[6px]" />
           Simpan
         </button>
         <button
           @click="showCreate = false"
-          style="
-            padding: 10px 20px; font-size: 14px; font-weight: 500;
-            font-family: inherit; border: 1px solid var(--color-border);
-            border-radius: 8px; cursor: pointer; transition: all 0.15s ease;
-            background: transparent; color: var(--color-text-secondary);
-          "
+          class="py-[10px] px-[20px] text-[14px] font-medium font-[inherit] border border-[var(--color-border)] rounded-[8px] cursor-pointer transition-all duration-[0.15s] ease bg-transparent text-[var(--color-text-secondary)]"
           @mouseenter="$event.target.style.background = 'var(--color-bg)'"
           @mouseleave="$event.target.style.background = 'transparent'"
         >
@@ -300,10 +209,10 @@ async function handleDelete(id) {
 
 <style scoped>
 @media (max-width: 640px) {
-  div[style*="grid-template-columns: 1fr 1fr"] {
+  .create-form-grid-type {
     grid-template-columns: 1fr !important;
   }
-  div[style*="grid-template-columns: 2fr 1fr"] {
+  .create-form-grid-details {
     grid-template-columns: 1fr !important;
   }
 }
