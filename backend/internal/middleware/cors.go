@@ -15,7 +15,7 @@ func CORS(cfg *config.Config) gin.HandlerFunc {
 	corsCfg := cors.DefaultConfig()
 
 	if cfg.AppEnv == "production" {
-		corsCfg.AllowOrigins = []string{cfg.AppBaseURL}
+		corsCfg.AllowOrigins = []string{cfg.FrontendURL}
 	} else {
 		corsCfg.AllowAllOrigins = true
 	}

@@ -20,8 +20,6 @@ Thumbs.db
 # Build output
 frontend/dist/
 
-# Go
-backend/go.sum
 
 # Docker
 postgres_data/

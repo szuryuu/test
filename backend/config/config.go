@@ -8,18 +8,19 @@ import (
 )
 
 type Config struct {
-	AppEnv     string
-	AppPort    string
-	AppBaseURL string
+	AppEnv      string
+	AppPort     string
+	AppBaseURL  string
+	FrontendURL string
 
-	DBHost            string
-	DBPort            string
-	DBName            string
-	DBUser            string
-	DBPassword        string
-	DBSSLMode         string
-	DBMaxConnections  int
-	DBMaxIdleConns    int
+	DBHost           string
+	DBPort           string
+	DBName           string
+	DBUser           string
+	DBPassword       string
+	DBSSLMode        string
+	DBMaxConnections int
+	DBMinConns       int
 
 	JWTSecret    string
 	JWTExpiryHours int
@@ -51,7 +52,8 @@ func Load() (*Config, error) {
 		DBPassword:       getEnv("DB_PASSWORD", ""),
 		DBSSLMode:        getEnv("DB_SSL_MODE", "disable"),
 		DBMaxConnections: getEnvInt("DB_MAX_CONNECTIONS", 25),
-		DBMaxIdleConns:   getEnvInt("DB_MAX_IDLE_CONNECTIONS", 5),
+		DBMinConns:       getEnvInt("DB_MAX_IDLE_CONNECTIONS", 5),
+		FrontendURL:      getEnv("FRONTEND_URL", "http://localhost:5173"),
 
 		JWTSecret:     getEnv("JWT_SECRET", ""),
 		JWTExpiryHours: getEnvInt("JWT_EXPIRY_HOURS", 72),
