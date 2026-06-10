@@ -117,65 +117,34 @@ const chartConfig = computed(() => ({
 
 <template>
   <div
-    style="
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 20px;
-      box-shadow: var(--shadow-card);
-    "
+    class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] p-[20px] shadow-[var(--shadow-card)]"
   >
-    <div
-      style="
-        display: flex; justify-content: space-between;
-        align-items: center; margin-bottom: 16px;
-      "
-    >
-      <h3
-        style="
-          margin: 0; font-size: 15px; font-weight: 600;
-          color: var(--color-text);
-        "
-      >
+    <div class="flex justify-between items-center mb-[16px]">
+      <h3 class="m-0 text-[15px] font-semibold text-[var(--color-text)]">
         Pemasukan vs Pengeluaran
       </h3>
-      <span
-        style="
-          font-size: 11px; color: var(--color-text-tertiary);
-        "
-      >
+      <span class="text-[11px] text-[var(--color-text-tertiary)]">
         Per periode
       </span>
     </div>
 
-    <div style="height: 300px; position: relative">
+    <div class="h-[300px] relative">
       <Bar
         v-if="hasData"
         :data="chartConfig.data"
         :options="chartConfig.options"
       />
-      <div
-        v-else
-        style="
-          display: flex; align-items: center; justify-content: center;
-          height: 100%;
-        "
-      >
-        <div style="text-align: center">
+      <div v-else class="flex items-center justify-center h-full">
+        <div class="text-center">
           <div
-            style="
-              width: 56px; height: 56px; border-radius: 12px;
-              background: var(--color-bg); margin: 0 auto 12px;
-              display: flex; align-items: center; justify-content: center;
-              font-size: 24px; color: var(--color-text-tertiary);
-            "
+            class="w-[56px] h-[56px] rounded-[12px] bg-[var(--color-bg)] mx-auto mb-[12px] flex items-center justify-center text-[24px] text-[var(--color-text-tertiary)]"
           >
             <i class="pi pi-chart-bar" />
           </div>
-          <p style="font-size: 14px; color: var(--color-text-secondary); margin: 0">
+          <p class="text-[14px] text-[var(--color-text-secondary)] m-0">
             Belum ada data transaksi
           </p>
-          <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 4px 0 0">
+          <p class="text-[12px] text-[var(--color-text-tertiary)] mt-[4px]">
             Transaksi akan muncul setelah dicatat
           </p>
         </div>
