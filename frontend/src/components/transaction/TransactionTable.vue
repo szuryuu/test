@@ -62,23 +62,11 @@ function clearFilters() {
   <div>
     <!-- Filters -->
     <div
-      style="
-        display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
-        margin-bottom: 16px; padding: 16px;
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow-card);
-      "
+      class="flex flex-wrap items-center gap-[8px] mb-[16px] p-[16px] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] shadow-[var(--shadow-card)]"
     >
       <select
         v-model="filters.type"
-        style="
-          padding: 8px 12px; font-size: 13px; font-family: inherit;
-          border: 1px solid var(--color-border); border-radius: 8px;
-          background: var(--color-surface); color: var(--color-text);
-          cursor: pointer; min-width: 130px;
-        "
+        class="py-[8px] px-[12px] text-[13px] font-[inherit] border border-[var(--color-border)] rounded-[8px] bg-[var(--color-surface)] text-[var(--color-text)] cursor-pointer min-w-[130px]"
       >
         <option v-for="opt in typeOptions" :key="opt.value" :value="opt.value">
           {{ opt.label }}
@@ -88,33 +76,20 @@ function clearFilters() {
       <input
         v-model="filters.start_date"
         type="date"
-        style="
-          padding: 8px 12px; font-size: 13px; font-family: inherit;
-          border: 1px solid var(--color-border); border-radius: 8px;
-          background: var(--color-surface); color: var(--color-text);
-        "
+        class="py-[8px] px-[12px] text-[13px] font-[inherit] border border-[var(--color-border)] rounded-[8px] bg-[var(--color-surface)] text-[var(--color-text)]"
         placeholder="Dari"
       />
 
       <input
         v-model="filters.end_date"
         type="date"
-        style="
-          padding: 8px 12px; font-size: 13px; font-family: inherit;
-          border: 1px solid var(--color-border); border-radius: 8px;
-          background: var(--color-surface); color: var(--color-text);
-        "
+        class="py-[8px] px-[12px] text-[13px] font-[inherit] border border-[var(--color-border)] rounded-[8px] bg-[var(--color-surface)] text-[var(--color-text)]"
         placeholder="Sampai"
       />
 
       <button
         @click="clearFilters"
-        style="
-          padding: 8px 14px; font-size: 13px; font-family: inherit;
-          border: 1px solid var(--color-border); border-radius: 8px;
-          background: transparent; color: var(--color-text-secondary);
-          cursor: pointer; transition: all 0.15s ease;
-        "
+        class="py-[8px] px-[14px] text-[13px] font-[inherit] border border-[var(--color-border)] rounded-[8px] bg-transparent text-[var(--color-text-secondary)] cursor-pointer transition-all duration-[0.15s] ease"
         @mouseenter="$event.target.style.background = 'var(--color-bg)'"
         @mouseleave="$event.target.style.background = 'transparent'"
       >
@@ -125,80 +100,44 @@ function clearFilters() {
     <!-- Loading state -->
     <div
       v-if="store.isLoading && !store.transactions.length"
-      style="
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow-card);
-        overflow: hidden;
-      "
+      class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] shadow-[var(--shadow-card)] overflow-hidden"
     >
-      <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px">
-        <div v-for="i in 5" :key="i" class="skeleton" style="height: 48px; border-radius: 8px" />
+      <div class="p-[16px] flex flex-col gap-[12px]">
+        <div v-for="i in 5" :key="i" class="skeleton h-[48px] rounded-[8px]" />
       </div>
     </div>
 
     <!-- Table -->
     <div
       v-else
-      style="
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow-card);
-        overflow: hidden;
-      "
+      class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] shadow-[var(--shadow-card)] overflow-hidden"
     >
       <!-- Desktop table -->
-      <table
-        class="responsive-table"
-        style="width: 100%; border-collapse: collapse"
-      >
+      <table class="responsive-table w-full border-collapse">
         <thead>
-          <tr style="border-bottom: 1px solid var(--color-border); background: var(--color-bg)">
+          <tr class="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
             <th
-              style="
-                text-align: left; padding: 12px 16px; font-size: 11px;
-                font-weight: 600; color: var(--color-text-secondary);
-                text-transform: uppercase; letter-spacing: 0.05em;
-              "
+              class="text-left p-[12px_16px] text-[11px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-[0.05em]"
             >
               Tanggal
             </th>
             <th
-              style="
-                text-align: left; padding: 12px 16px; font-size: 11px;
-                font-weight: 600; color: var(--color-text-secondary);
-                text-transform: uppercase; letter-spacing: 0.05em;
-              "
+              class="text-left p-[12px_16px] text-[11px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-[0.05em]"
             >
               Deskripsi
             </th>
             <th
-              style="
-                text-align: left; padding: 12px 16px; font-size: 11px;
-                font-weight: 600; color: var(--color-text-secondary);
-                text-transform: uppercase; letter-spacing: 0.05em;
-              "
+              class="text-left p-[12px_16px] text-[11px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-[0.05em]"
             >
               Tipe
             </th>
             <th
-              style="
-                text-align: right; padding: 12px 16px; font-size: 11px;
-                font-weight: 600; color: var(--color-text-secondary);
-                text-transform: uppercase; letter-spacing: 0.05em;
-              "
+              class="text-right p-[12px_16px] text-[11px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-[0.05em]"
             >
               Jumlah
             </th>
             <th
-              style="
-                text-align: center; padding: 12px 16px; font-size: 11px;
-                font-weight: 600; color: var(--color-text-secondary);
-                text-transform: uppercase; letter-spacing: 0.05em;
-                width: 60px;
-              "
+              class="text-center p-[12px_16px] text-[11px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-[0.05em] w-[60px]"
             >
               Aksi
             </th>
@@ -208,7 +147,7 @@ function clearFilters() {
           <tr
             v-for="(tx, idx) in store.transactions"
             :key="tx.id"
-            style="transition: background 0.15s ease;"
+            class="transition-[background] duration-[0.15s] ease"
             :style="{
               borderBottom: '1px solid var(--color-border-light)',
               background: idx % 2 === 0 ? 'transparent' : 'rgba(248, 250, 252, 0.5)',
@@ -218,22 +157,19 @@ function clearFilters() {
           >
             <td
               data-label="Tanggal"
-              style="padding: 12px 16px; font-size: 13px; color: var(--color-text);"
+              class="p-[12px_16px] text-[13px] text-[var(--color-text)]"
             >
               {{ formatDate(tx.transaction_date) }}
             </td>
             <td
               data-label="Deskripsi"
-              style="padding: 12px 16px; font-size: 13px; color: var(--color-text); max-width: 240px;"
+              class="p-[12px_16px] text-[13px] text-[var(--color-text)] max-w-[240px]"
             >
-              <span class="truncate" style="display: block">{{ tx.description }}</span>
+              <span class="block truncate">{{ tx.description }}</span>
             </td>
-            <td data-label="Tipe" style="padding: 12px 16px">
+            <td data-label="Tipe" class="p-[12px_16px]">
               <span
-                style="
-                  display: inline-block; font-size: 11px; font-weight: 500;
-                  padding: 3px 10px; border-radius: 999px;
-                "
+                class="inline-block text-[11px] font-medium py-[3px] px-[10px] rounded-[999px]"
                 :style="{
                   background: tx.type === 'income' ? 'var(--color-income-bg)' : 'var(--color-expense-bg)',
                   color: tx.type === 'income' ? 'var(--color-income)' : 'var(--color-expense)',
@@ -244,22 +180,17 @@ function clearFilters() {
             </td>
             <td
               data-label="Jumlah"
-              style="padding: 12px 16px; font-size: 13px; font-weight: 600; text-align: right;"
+              class="p-[12px_16px] text-[13px] font-semibold text-right"
               :style="{
                 color: tx.type === 'income' ? 'var(--color-income)' : 'var(--color-expense)',
               }"
             >
               {{ tx.type === "income" ? "+" : "−" }}{{ formatRupiah(tx.amount) }}
             </td>
-            <td data-label="Aksi" style="padding: 12px 16px; text-align: center">
+            <td data-label="Aksi" class="p-[12px_16px] text-center">
               <button
                 @click="handleDelete(tx.id)"
-                style="
-                  background: transparent; border: none; cursor: pointer;
-                  padding: 6px 8px; border-radius: 6px;
-                  color: var(--color-text-tertiary); font-size: 15px;
-                  transition: all 0.15s ease;
-                "
+                class="bg-transparent border-0 cursor-pointer p-[6px_8px] rounded-[6px] text-[var(--color-text-tertiary)] text-[15px] transition-all duration-[0.15s] ease"
                 @mouseenter="
                   $event.target.style.background = 'var(--color-expense-bg)';
                   $event.target.style.color = 'var(--color-expense)';
@@ -277,21 +208,16 @@ function clearFilters() {
 
           <!-- Empty state -->
           <tr v-if="store.transactions.length === 0 && !store.isLoading">
-            <td colspan="5" style="padding: 48px 16px; text-align: center">
+            <td colspan="5" class="p-[48px_16px] text-center">
               <div
-                style="
-                  width: 56px; height: 56px; border-radius: 12px;
-                  background: var(--color-bg); margin: 0 auto 12px;
-                  display: flex; align-items: center; justify-content: center;
-                  font-size: 24px; color: var(--color-text-tertiary);
-                "
+                class="w-[56px] h-[56px] rounded-[12px] bg-[var(--color-bg)] mx-auto mb-[12px] flex items-center justify-center text-[24px] text-[var(--color-text-tertiary)]"
               >
                 <i class="pi pi-inbox" />
               </div>
-              <p style="font-size: 14px; color: var(--color-text-secondary); margin: 0">
+              <p class="text-[14px] text-[var(--color-text-secondary)] m-0">
                 Tidak ada transaksi
               </p>
-              <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 4px 0 0">
+              <p class="text-[12px] text-[var(--color-text-tertiary)] mt-[4px]">
                 {{ filters.type || filters.start_date || filters.end_date ? 'Coba ubah filter pencarian' : 'Tambahkan transaksi baru untuk memulai' }}
               </p>
             </td>
@@ -302,41 +228,27 @@ function clearFilters() {
       <!-- Pagination -->
       <div
         v-if="store.total > limit"
-        style="
-          display: flex; justify-content: space-between; align-items: center;
-          padding: 12px 16px; border-top: 1px solid var(--color-border);
-          background: var(--color-bg);
-        "
+        class="flex justify-between items-center p-[12px_16px] border-t border-[var(--color-border)] bg-[var(--color-bg)]"
       >
-        <span style="font-size: 12px; color: var(--color-text-secondary)">
+        <span class="text-[12px] text-[var(--color-text-secondary)]">
           {{ store.total }} transaksi
         </span>
-        <div style="display: flex; align-items: center; gap: 4px">
+        <div class="flex items-center gap-[4px]">
           <button
             @click="onPageChange(page - 1)"
             :disabled="page <= 1"
-            style="
-              padding: 6px 10px; font-size: 13px; font-family: inherit;
-              border: 1px solid var(--color-border); border-radius: 6px;
-              background: var(--color-surface); color: var(--color-text);
-              cursor: pointer; transition: all 0.15s ease;
-            "
+            class="py-[6px] px-[10px] text-[13px] font-[inherit] border border-[var(--color-border)] rounded-[6px] bg-[var(--color-surface)] text-[var(--color-text)] cursor-pointer transition-all duration-[0.15s] ease"
             :style="{ opacity: page <= 1 ? 0.4 : 1, cursor: page <= 1 ? 'not-allowed' : 'pointer' }"
           >
             <i class="pi pi-chevron-left" />
           </button>
-          <span style="font-size: 12px; color: var(--color-text-secondary); padding: 0 8px">
+          <span class="text-[12px] text-[var(--color-text-secondary)] px-[8px]">
             {{ page }} / {{ totalPages }}
           </span>
           <button
             @click="onPageChange(page + 1)"
             :disabled="page >= totalPages"
-            style="
-              padding: 6px 10px; font-size: 13px; font-family: inherit;
-              border: 1px solid var(--color-border); border-radius: 6px;
-              background: var(--color-surface); color: var(--color-text);
-              cursor: pointer; transition: all 0.15s ease;
-            "
+            class="py-[6px] px-[10px] text-[13px] font-[inherit] border border-[var(--color-border)] rounded-[6px] bg-[var(--color-surface)] text-[var(--color-text)] cursor-pointer transition-all duration-[0.15s] ease"
             :style="{ opacity: page >= totalPages ? 0.4 : 1, cursor: page >= totalPages ? 'not-allowed' : 'pointer' }"
           >
             <i class="pi pi-chevron-right" />
