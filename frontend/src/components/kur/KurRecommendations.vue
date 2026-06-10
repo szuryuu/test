@@ -6,34 +6,14 @@ defineProps({
 
 <template>
   <div
-    style="
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 20px;
-      box-shadow: var(--shadow-card);
-    "
+    class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] p-[20px] shadow-[var(--shadow-card)]"
   >
-    <div
-      style="
-        display: flex; justify-content: space-between;
-        align-items: center; margin-bottom: 16px;
-      "
-    >
-      <h3
-        style="
-          margin: 0; font-size: 15px; font-weight: 600;
-          color: var(--color-text);
-        "
-      >
+    <div class="flex justify-between items-center mb-[16px]">
+      <h3 class="m-0 text-[15px] font-semibold text-[var(--color-text)]">
         Rekomendasi
       </h3>
       <span
-        style="
-          font-size: 11px; color: var(--color-text-tertiary);
-          background: var(--color-bg); padding: 2px 8px;
-          border-radius: 999px;
-        "
+        class="text-[11px] text-[var(--color-text-tertiary)] bg-[var(--color-bg)] py-[2px] px-[8px] rounded-[999px]"
       >
         {{ recommendations.length }} tips
       </span>
@@ -42,50 +22,34 @@ defineProps({
     <!-- Empty state -->
     <div
       v-if="!recommendations.length"
-      style="text-align: center; padding: 24px 0"
+      class="text-center py-[24px]"
     >
       <div
-        style="
-          width: 48px; height: 48px; border-radius: 12px;
-          background: var(--color-bg); margin: 0 auto 10px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 20px; color: var(--color-text-tertiary);
-        "
+        class="w-[48px] h-[48px] rounded-[12px] bg-[var(--color-bg)] mx-auto mb-[10px] flex items-center justify-center text-[20px] text-[var(--color-text-tertiary)]"
       >
         <i class="pi pi-info-circle" />
       </div>
-      <p style="font-size: 14px; color: var(--color-text-secondary); margin: 0">
+      <p class="text-[14px] text-[var(--color-text-secondary)] m-0">
         Belum ada rekomendasi
       </p>
-      <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 4px 0 0">
+      <p class="text-[12px] text-[var(--color-text-tertiary)] mt-[4px]">
         Tambahkan lebih banyak transaksi
       </p>
     </div>
 
     <!-- Recommendation list -->
-    <ul v-else style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px">
+    <ul v-else class="list-none p-0 m-0 flex flex-col gap-[8px]">
       <li
         v-for="(rec, i) in recommendations"
         :key="i"
-        style="
-          display: flex; align-items: flex-start; gap: 12px;
-          padding: 12px; border-radius: 8px;
-          background: var(--color-bg);
-        "
+        class="flex items-start gap-[12px] p-[12px] rounded-[8px] bg-[var(--color-bg)]"
       >
         <span
-          style="
-            width: 26px; height: 26px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; font-size: 12px; font-weight: 700;
-            margin-top: 1px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-          "
+          class="w-[26px] h-[26px] rounded-[8px] flex items-center justify-center shrink-0 text-[12px] font-bold mt-[1px] bg-[linear-gradient(135deg,#10b981,#059669)] text-white"
         >
           {{ i + 1 }}
         </span>
-        <p style="margin: 0; font-size: 13px; color: var(--color-text); line-height: 1.5">
+        <p class="m-0 text-[13px] text-[var(--color-text)] leading-[1.5]">
           {{ rec }}
         </p>
       </li>
