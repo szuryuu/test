@@ -29,6 +29,7 @@ type transactionService struct {
 	fonnte       *fonnte.Client
 	dashboardSvc DashboardService
 	reportSvc    ReportService
+	kurSvc       KurService
 }
 
 func NewTransactionService(
@@ -37,6 +38,7 @@ func NewTransactionService(
 	fonnteClient *fonnte.Client,
 	dashboardSvc DashboardService,
 	reportSvc ReportService,
+	kurSvc KurService,
 ) TransactionService {
 	return &transactionService{
 		repo:         repo,
@@ -44,6 +46,7 @@ func NewTransactionService(
 		fonnte:       fonnteClient,
 		dashboardSvc: dashboardSvc,
 		reportSvc:    reportSvc,
+		kurSvc:       kurSvc,
 	}
 }
 
@@ -168,8 +171,36 @@ func (s *transactionService) handleCommand(ctx context.Context, umkmID uuid.UUID
 		)
 
 	case "skor":
-		// Placeholder — akan terhubung ke KurService di Step 5
-		return "⭐ Fitur pengecekan skor KUR via WhatsApp sedang dikembangkan. Cek dashboard web Anda untuk melihat skor KUR."
+		result, err := s.kurSvc.Recalculate(ctx, umkmID)
+		if err != nil {
+			slog.Error("gagal hitung KUR via WhatsApp", "umkm_id", umkmID, "error", err)
+			return "❌ Gagal menghitung skor KUR. Coba lagi nanti."
+		}
+
+		levelDesc := map[string]string{
+			"sangat_baik": "Sangat siap mengajukan KUR! 🎉",
+			"baik":        "Siap KUR dengan persiapan tambahan 👍",
+			"sedang":      "Perlu tingkatkan konsistensi pencatatan 📝",
+			"rendah":      "Fokus pencatatan rutin minimal 3 bulan 💪",
+		}
+
+		recs := ""
+		for i, r := range result.Recommendations {
+			recs += fmt.Sprintf("\n%d. %s", i+1, r)
+		}
+
+		return fmt.Sprintf(
+			"⭐ *Skor KUR Anda: %d/100*\n\n"+
+				"Status: %s\n\n"+
+				"💰 Rata-rata pemasukan: Rp%s/bulan\n"+
+				"📊 Margin laba: %.1f%%\n\n"+
+				"📋 *Rekomendasi:*%s",
+			result.Score,
+			levelDesc[result.Level],
+			formatRupiah(result.MonthlyIncomeAvg),
+			result.ProfitMargin,
+			recs,
+		)
 
 	case "laporan":
 		now := time.Now()

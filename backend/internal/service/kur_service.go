@@ -7,6 +7,7 @@ import (
 	"math"
 	"time"
 
+	"kasiraiai/backend/internal/model"
 	"kasiraiai/backend/internal/repository"
 
 	"github.com/google/uuid"
@@ -38,12 +39,45 @@ func NewKurService(repo repository.TransactionRepo) KurService {
 }
 
 func (s *kurService) GetScore(ctx context.Context, umkmID uuid.UUID) (*KurScoreResult, error) {
-	// Placeholder — akan diisi di Step 5
+	// Coba ambil skor terbaru dari DB dulu
+	cached, err := s.repo.GetLatestKurScore(ctx, umkmID)
+	if err != nil {
+		slog.Warn("gagal ambil skor KUR dari cache, hitung ulang", "umkm_id", umkmID, "error", err)
+		return s.calculate(ctx, umkmID)
+	}
+	if cached != nil {
+		return kurScoreToResult(cached), nil
+	}
+	// Belum ada skor — hitung baru
 	return s.calculate(ctx, umkmID)
 }
 
 func (s *kurService) Recalculate(ctx context.Context, umkmID uuid.UUID) (*KurScoreResult, error) {
-	return s.calculate(ctx, umkmID)
+	result, err := s.calculate(ctx, umkmID)
+	if err != nil {
+		return nil, err
+	}
+
+	// Persist ke database
+	margin := result.ProfitMargin
+	consistency := result.ConsistencyScore
+	ks := &model.KurScore{
+		UmkmID:            umkmID,
+		Score:             result.Score,
+		Level:             result.Level,
+		MonthlyIncomeAvg:  result.MonthlyIncomeAvg,
+		MonthlyExpenseAvg: result.MonthlyExpenseAvg,
+		ProfitMargin:      &margin,
+		ConsistencyScore:  &consistency,
+		MonthsOfData:      result.MonthsOfData,
+		Recommendations:   result.Recommendations,
+	}
+	if saveErr := s.repo.SaveKurScore(ctx, ks); saveErr != nil {
+		slog.Error("gagal simpan skor KUR ke DB", "umkm_id", umkmID, "error", saveErr)
+		// Tetap kembalikan hasil walau gagal simpan
+	}
+
+	return result, nil
 }
 
 func (s *kurService) calculate(ctx context.Context, umkmID uuid.UUID) (*KurScoreResult, error) {
@@ -195,4 +229,27 @@ func generateRecommendations(score int, margin float64, consistency, months int)
 		recs = append(recs, fmt.Sprintf("Lanjutkan pencatatan rutin minimal %d bulan lagi untuk meningkatkan skor", 3-months))
 	}
 	return recs
+}
+
+// kurScoreToResult mengkonversi model.KurScore (DB) ke KurScoreResult (API response).
+func kurScoreToResult(ks *model.KurScore) *KurScoreResult {
+	margin := 0.0
+	if ks.ProfitMargin != nil {
+		margin = *ks.ProfitMargin
+	}
+	consistency := 0
+	if ks.ConsistencyScore != nil {
+		consistency = *ks.ConsistencyScore
+	}
+	return &KurScoreResult{
+		Score:             ks.Score,
+		Level:             ks.Level,
+		MonthlyIncomeAvg:  ks.MonthlyIncomeAvg,
+		MonthlyExpenseAvg: ks.MonthlyExpenseAvg,
+		ProfitMargin:      margin,
+		ConsistencyScore:  consistency,
+		MonthsOfData:      ks.MonthsOfData,
+		Recommendations:   ks.Recommendations,
+		CalculatedAt:      ks.CalculatedAt.Format(time.RFC3339),
+	}
 }

@@ -52,6 +52,8 @@ type TransactionRepo interface {
 	MonthlyIncomeValues(ctx context.Context, umkmID uuid.UUID, months int) ([]int64, error)
 	ConsistencyPct(ctx context.Context, umkmID uuid.UUID, days int) (float64, error)
 	DataMonths(ctx context.Context, umkmID uuid.UUID) (int, error)
+	SaveKurScore(ctx context.Context, ks *model.KurScore) error
+	GetLatestKurScore(ctx context.Context, umkmID uuid.UUID) (*model.KurScore, error)
 }
 
 type transactionRepo struct {
@@ -366,4 +368,47 @@ func (r *transactionRepo) DataMonths(ctx context.Context, umkmID uuid.UUID) (int
 		return 0, fmt.Errorf("transaction_repo.DataMonths: %w", err)
 	}
 	return count, nil
+}
+
+func (r *transactionRepo) SaveKurScore(ctx context.Context, ks *model.KurScore) error {
+	query := `
+		INSERT INTO kur_scores (umkm_id, score, level, monthly_income_avg, monthly_expense_avg,
+		                       profit_margin, consistency_score, months_of_data, recommendations)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+		RETURNING id, calculated_at`
+
+	err := r.pool.QueryRow(ctx, query,
+		ks.UmkmID, ks.Score, ks.Level, ks.MonthlyIncomeAvg, ks.MonthlyExpenseAvg,
+		ks.ProfitMargin, ks.ConsistencyScore, ks.MonthsOfData, ks.Recommendations,
+	).Scan(&ks.ID, &ks.CalculatedAt)
+
+	if err != nil {
+		return fmt.Errorf("transaction_repo.SaveKurScore: %w", err)
+	}
+	return nil
+}
+
+func (r *transactionRepo) GetLatestKurScore(ctx context.Context, umkmID uuid.UUID) (*model.KurScore, error) {
+	query := `
+		SELECT id, umkm_id, score, level, monthly_income_avg, monthly_expense_avg,
+		       profit_margin, consistency_score, months_of_data, recommendations, calculated_at
+		FROM kur_scores
+		WHERE umkm_id = $1
+		ORDER BY calculated_at DESC
+		LIMIT 1`
+
+	ks := &model.KurScore{}
+	err := r.pool.QueryRow(ctx, query, umkmID).Scan(
+		&ks.ID, &ks.UmkmID, &ks.Score, &ks.Level,
+		&ks.MonthlyIncomeAvg, &ks.MonthlyExpenseAvg,
+		&ks.ProfitMargin, &ks.ConsistencyScore, &ks.MonthsOfData,
+		&ks.Recommendations, &ks.CalculatedAt,
+	)
+	if err == pgx.ErrNoRows {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, fmt.Errorf("transaction_repo.GetLatestKurScore: %w", err)
+	}
+	return ks, nil
 }
