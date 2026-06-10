@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { reportAPI } from "@/api/kur";
-import { formatRupiah } from "@/utils/format";
+import { formatRupiah, parseWhatsAppText } from "@/utils/format";
 
 const year = ref(new Date().getFullYear());
 const month = ref(new Date().getMonth() + 1);
@@ -10,8 +10,18 @@ const report = ref(null);
 const error = ref("");
 
 const monthNames = [
-  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-  "Juli", "Agustus", "September", "Oktober", "November", "Desember",
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
 ];
 
 async function generateReport() {
@@ -27,64 +37,49 @@ async function generateReport() {
     isLoading.value = false;
   }
 }
+
+const handlePrint = () => {
+  if (typeof window !== "undefined") {
+    window.print();
+  }
+};
 </script>
 
 <template>
   <div>
     <!-- Page header -->
-    <div style="margin-bottom: 24px">
+    <div class="mb-[24px]">
       <h1
-        style="
-          margin: 0 0 4px; font-size: 24px; font-weight: 700;
-          color: var(--color-text); letter-spacing: -0.02em;
-        "
+        class="m-0 mb-[4px] text-[24px] font-bold text-[var(--color-text)] tracking-[-0.02em]"
       >
         Laporan Bulanan
       </h1>
-      <p style="margin: 0; font-size: 14px; color: var(--color-text-secondary)">
+      <p class="m-0 text-[14px] text-[var(--color-text-secondary)]">
         Generate laporan keuangan bulanan dan kirim via WhatsApp
       </p>
     </div>
 
     <!-- Generator card -->
     <div
-      style="
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-card);
-        padding: 24px;
-        box-shadow: var(--shadow-card);
-        margin-bottom: 20px;
-      "
+      class="no-print bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] p-[24px] shadow-[var(--shadow-card)] mb-[20px]"
     >
       <h3
-        style="
-          margin: 0 0 16px; font-size: 15px; font-weight: 600;
-          color: var(--color-text);
-        "
+        class="m-0 mb-[16px] text-[15px] font-semibold text-[var(--color-text)]"
       >
-        <i class="pi pi-calendar" style="margin-right: 8px; color: var(--color-brand-500)" />
+        <i class="pi pi-calendar mr-[8px] text-[var(--color-brand-500)]" />
         Pilih Periode Laporan
       </h3>
 
-      <div
-        style="
-          display: flex; flex-wrap: wrap; align-items: flex-end;
-          gap: 12px;
-        "
-      >
-        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 160px">
-          <label style="font-size: 12px; font-weight: 500; color: var(--color-text-secondary)">
+      <div class="flex flex-wrap items-end gap-[12px]">
+        <div class="flex flex-col gap-[6px] min-w-[160px]">
+          <label
+            class="text-[12px] font-medium text-[var(--color-text-secondary)]"
+          >
             Bulan
           </label>
           <select
             v-model="month"
-            style="
-              padding: 10px 12px; font-size: 14px; font-family: inherit;
-              border: 1px solid var(--color-border); border-radius: 8px;
-              background: var(--color-bg); color: var(--color-text);
-              cursor: pointer;
-            "
+            class="py-[10px] px-[12px] text-[14px] font-[inherit] border border-[var(--color-border)] rounded-[8px] bg-[var(--color-bg)] text-[var(--color-text)] cursor-pointer"
           >
             <option v-for="(name, i) in monthNames" :key="i" :value="i + 1">
               {{ name }}
@@ -92,8 +87,10 @@ async function generateReport() {
           </select>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 100px">
-          <label style="font-size: 12px; font-weight: 500; color: var(--color-text-secondary)">
+        <div class="flex flex-col gap-[6px] min-w-[100px]">
+          <label
+            class="text-[12px] font-medium text-[var(--color-text-secondary)]"
+          >
             Tahun
           </label>
           <input
@@ -101,55 +98,44 @@ async function generateReport() {
             type="number"
             min="2024"
             max="2030"
-            style="
-              padding: 10px 12px; font-size: 14px; font-family: inherit;
-              border: 1px solid var(--color-border); border-radius: 8px;
-              background: var(--color-bg); color: var(--color-text);
-            "
+            class="py-[10px] px-[12px] text-[14px] font-[inherit] border border-[var(--color-border)] rounded-[8px] bg-[var(--color-bg)] text-[var(--color-text)]"
           />
         </div>
 
         <button
           @click="generateReport"
           :disabled="isLoading"
-          style="
-            display: flex; align-items: center; gap: 8px;
-            padding: 10px 24px; font-size: 14px; font-weight: 600;
-            font-family: inherit; border: none; border-radius: 8px;
-            cursor: pointer; transition: all 0.15s ease;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-          "
+          class="flex items-center gap-[8px] py-[10px] px-[24px] text-[14px] font-semibold font-[inherit] border-0 rounded-[8px] cursor-pointer transition-all duration-[0.15s] ease bg-[linear-gradient(135deg,#10b981,#059669)] text-white disabled:cursor-default"
           :style="{ opacity: isLoading ? 0.7 : 1 }"
-          @mouseenter="!isLoading && ($event.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.4)')"
+          @mouseenter="
+            !isLoading &&
+            ($event.target.style.boxShadow =
+              '0 4px 12px rgba(16, 185, 129, 0.4)')
+          "
           @mouseleave="!isLoading && ($event.target.style.boxShadow = 'none')"
         >
-          <i class="pi pi-file" style="font-size: 14px" />
+          <i class="pi pi-file text-[14px]" />
           {{ isLoading ? "Membuat Laporan..." : "Buat Laporan" }}
         </button>
       </div>
     </div>
 
     <!-- Loading skeleton -->
-    <div v-if="isLoading" style="display: flex; flex-direction: column; gap: 16px">
-      <div class="skeleton" style="height: 200px; border-radius: var(--radius-card)" />
-      <div class="skeleton" style="height: 80px; border-radius: var(--radius-card)" />
+    <div v-if="isLoading" class="flex flex-col gap-[16px]">
+      <div class="skeleton h-[200px] rounded-[var(--radius-card)]" />
+      <div class="skeleton h-[80px] rounded-[var(--radius-card)]" />
     </div>
 
     <!-- Error -->
     <div
       v-if="error"
-      style="
-        padding: 16px 20px; margin-bottom: 20px;
-        background: var(--color-expense-bg);
-        border: 1px solid rgba(239, 68, 68, 0.2);
-        border-radius: var(--radius-card);
-        display: flex; align-items: flex-start; gap: 12px;
-      "
+      class="py-[16px] px-[20px] mb-[20px] bg-[var(--color-expense-bg)] border border-[rgba(239,68,68,0.2)] rounded-[var(--radius-card)] flex items-start gap-[12px]"
     >
-      <i class="pi pi-exclamation-triangle" style="color: var(--color-expense); font-size: 18px; margin-top: 1px" />
+      <i
+        class="pi pi-exclamation-triangle text-[var(--color-expense)] text-[18px] mt-[1px]"
+      />
       <div>
-        <p style="margin: 0; font-size: 14px; font-weight: 500; color: #dc2626">
+        <p class="m-0 text-[14px] font-medium text-[#dc2626]">
           {{ error }}
         </p>
       </div>
@@ -158,134 +144,109 @@ async function generateReport() {
     <!-- Report result -->
     <div
       v-if="report"
-      style="
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow-card);
-        overflow: hidden;
-      "
+      class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] shadow-[var(--shadow-card)] overflow-hidden"
     >
       <!-- Report header -->
       <div
-        style="
-          padding: 20px 24px;
-          border-bottom: 1px solid var(--color-border);
-          display: flex; justify-content: space-between;
-          align-items: center; flex-wrap: wrap; gap: 8px;
-        "
+        class="py-[20px] px-[24px] border-b border-[var(--color-border)] flex justify-between items-center flex-wrap gap-[8px]"
       >
         <div>
-          <h3
-            style="
-              margin: 0; font-size: 16px; font-weight: 600;
-              color: var(--color-text);
-            "
-          >
+          <h3 class="m-0 text-[16px] font-semibold text-[var(--color-text)]">
             Laporan {{ monthNames[month - 1] }} {{ year }}
           </h3>
-          <p style="margin: 2px 0 0; font-size: 12px; color: var(--color-text-tertiary)">
+          <p
+            class="mt-[2px] mb-0 text-[12px] text-[var(--color-text-tertiary)]"
+          >
             Ringkasan keuangan bulanan
           </p>
         </div>
         <span
-          style="
-            font-size: 11px; padding: 4px 10px;
-            background: var(--color-income-bg); color: var(--color-income);
-            border-radius: 999px; font-weight: 500;
-          "
+          class="text-[11px] py-[4px] px-[10px] bg-[var(--color-income-bg)] text-[var(--color-income)] rounded-[999px] font-medium"
         >
           Siap dikirim via WhatsApp
         </span>
+        <button
+          class="no-print flex items-center gap-[8px] py-[8px] px-[16px] text-[13px] font-semibold font-[inherit] border border-[var(--color-border)] rounded-[8px] cursor-pointer transition-all duration-[0.15s] ease bg-[var(--color-surface)] text-[var(--color-text-secondary)]"
+          @click="handlePrint"
+          @mouseenter="
+            $event.target.style.borderColor = '#94a3b8';
+            $event.target.style.color = 'var(--color-text)';
+          "
+          @mouseleave="
+            $event.target.style.borderColor = 'var(--color-border)';
+            $event.target.style.color = 'var(--color-text-secondary)';
+          "
+        >
+          <i class="pi pi-print text-[14px]" />
+          Cetak Laporan
+        </button>
       </div>
 
       <!-- Summary numbers -->
       <div
         v-if="report.total_income"
-        style="
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1px;
-          background: var(--color-border);
-        "
+        class="summary-grid grid grid-cols-3 gap-[1px] bg-[var(--color-border)]"
       >
-        <div style="background: var(--color-surface); padding: 16px 20px; text-align: center">
-          <p style="margin: 0 0 4px; font-size: 11px; font-weight: 600; color: var(--color-income); text-transform: uppercase; letter-spacing: 0.05em">
+        <div class="bg-[var(--color-surface)] py-[16px] px-[20px] text-center">
+          <p
+            class="m-0 mb-[4px] text-[11px] font-semibold text-[var(--color-income)] uppercase tracking-[0.05em]"
+          >
             Pemasukan
           </p>
-          <p style="margin: 0; font-size: 18px; font-weight: 700; color: var(--color-income)">
+          <p class="m-0 text-[18px] font-bold text-[var(--color-income)]">
             {{ formatRupiah(report.total_income) }}
           </p>
         </div>
-        <div style="background: var(--color-surface); padding: 16px 20px; text-align: center">
-          <p style="margin: 0 0 4px; font-size: 11px; font-weight: 600; color: var(--color-expense); text-transform: uppercase; letter-spacing: 0.05em">
+        <div class="bg-[var(--color-surface)] py-[16px] px-[20px] text-center">
+          <p
+            class="m-0 mb-[4px] text-[11px] font-semibold text-[var(--color-expense)] uppercase tracking-[0.05em]"
+          >
             Pengeluaran
           </p>
-          <p style="margin: 0; font-size: 18px; font-weight: 700; color: var(--color-expense)">
+          <p class="m-0 text-[18px] font-bold text-[var(--color-expense)]">
             {{ formatRupiah(report.total_expense) }}
           </p>
         </div>
-        <div style="background: var(--color-surface); padding: 16px 20px; text-align: center">
-          <p style="margin: 0 0 4px; font-size: 11px; font-weight: 600; color: var(--color-info); text-transform: uppercase; letter-spacing: 0.05em">
+        <div class="bg-[var(--color-surface)] py-[16px] px-[20px] text-center">
+          <p
+            class="m-0 mb-[4px] text-[11px] font-semibold text-[var(--color-info)] uppercase tracking-[0.05em]"
+          >
             Laba Bersih
           </p>
-          <p style="margin: 0; font-size: 18px; font-weight: 700; color: var(--color-info)">
+          <p class="m-0 text-[18px] font-bold text-[var(--color-info)]">
             {{ formatRupiah(report.net_profit) }}
           </p>
         </div>
       </div>
 
       <!-- Report text -->
-      <div style="padding: 20px 24px">
+      <div class="py-[20px] px-[24px]">
         <p
-          style="
-            margin: 0 0 12px; font-size: 13px; font-weight: 600;
-            color: var(--color-text);
-          "
+          class="m-0 mb-[12px] text-[13px] font-semibold text-[var(--color-text)]"
         >
           Ringkasan Teks
         </p>
         <div
-          style="
-            background: var(--color-bg);
-            border: 1px solid var(--color-border);
-            border-radius: 10px;
-            padding: 16px 20px;
-            font-size: 13px; line-height: 1.7;
-            color: var(--color-text);
-            white-space: pre-wrap;
-          "
-        >
-          {{ report.report_text }}
-        </div>
+          class="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] py-[16px] px-[20px] text-[13px] leading-[1.7] text-[var(--color-text)]"
+          v-html="parseWhatsAppText(report.report_text)"
+        />
       </div>
 
       <!-- Top categories -->
       <div
         v-if="report.top_categories && report.top_categories.length"
-        style="
-          padding: 0 24px 20px;
-        "
+        class="px-[24px] pb-[20px]"
       >
         <p
-          style="
-            margin: 0 0 10px; font-size: 13px; font-weight: 600;
-            color: var(--color-text);
-          "
+          class="m-0 mb-[10px] text-[13px] font-semibold text-[var(--color-text)]"
         >
           Kategori Teratas
         </p>
-        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <div class="flex flex-wrap gap-[8px]">
           <span
             v-for="(cat, i) in report.top_categories"
             :key="i"
-            style="
-              padding: 6px 14px; border-radius: 999px;
-              font-size: 12px; font-weight: 500;
-              background: var(--color-bg);
-              color: var(--color-text-secondary);
-              border: 1px solid var(--color-border);
-            "
+            class="py-[6px] px-[14px] rounded-[999px] text-[12px] font-medium bg-[var(--color-bg)] text-[var(--color-text-secondary)] border border-[var(--color-border)]"
           >
             {{ cat }}
           </span>
@@ -297,7 +258,7 @@ async function generateReport() {
 
 <style scoped>
 @media (max-width: 640px) {
-  div[style*="grid-template-columns: repeat(3, 1fr)"] {
+  .summary-grid {
     grid-template-columns: 1fr !important;
   }
 }
