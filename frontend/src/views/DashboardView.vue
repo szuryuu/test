@@ -43,40 +43,24 @@ const isLoading = computed(() => store.isLoading);
 <template>
   <div>
     <!-- Page header -->
-    <div style="margin-bottom: 24px">
-      <h1
-        style="
-          margin: 0 0 4px; font-size: 24px; font-weight: 700;
-          color: var(--color-text); letter-spacing: -0.02em;
-        "
-      >
+    <div class="mb-[24px]">
+      <h1 class="m-0 mb-[4px] text-[24px] font-bold text-[var(--color-text)] tracking-[-0.02em]">
         Dashboard
       </h1>
-      <p style="margin: 0; font-size: 14px; color: var(--color-text-secondary)">
+      <p class="m-0 text-[14px] text-[var(--color-text-secondary)]">
         Ringkasan keuangan UMKM Anda
       </p>
     </div>
 
     <!-- Period selector -->
     <div
-      style="
-        display: flex; gap: 4px; margin-bottom: 24px;
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: 10px;
-        padding: 4px;
-        width: fit-content;
-      "
+      class="flex gap-[4px] mb-[24px] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[10px] p-[4px] w-fit"
     >
       <button
         v-for="p in periods"
         :key="p.value"
         @click="changePeriod(p.value)"
-        style="
-          padding: 7px 16px; border: none; border-radius: 7px;
-          font-size: 13px; font-weight: 500; font-family: inherit;
-          cursor: pointer; transition: all 0.15s ease;
-        "
+        class="py-[7px] px-[16px] border-0 rounded-[7px] text-[13px] font-medium font-[inherit] cursor-pointer transition-all duration-[0.15s] ease"
         :style="{
           background: period === p.value
             ? 'linear-gradient(135deg, #10b981, #059669)'
@@ -93,31 +77,24 @@ const isLoading = computed(() => store.isLoading);
     <!-- Error state -->
     <div
       v-if="store.error"
-      style="padding: 12px 16px; background: var(--color-expense-bg); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; margin-bottom: 16px; font-size: 13px; color: #dc2626"
+      class="p-[12px_16px] bg-[var(--color-expense-bg)] border border-[rgba(239,68,68,0.2)] rounded-[10px] mb-[16px] text-[13px] text-[#dc2626]"
     >
-      <i class="pi pi-exclamation-triangle" style="margin-right: 8px" />
+      <i class="pi pi-exclamation-triangle mr-[8px]" />
       {{ store.error }}
     </div>
 
     <!-- Loading skeleton -->
-    <div v-if="isLoading && !store.summary" style="display: flex; flex-direction: column; gap: 20px">
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px">
-        <div v-for="i in 3" :key="i" class="skeleton" style="height: 120px; border-radius: var(--radius-card)" />
+    <div v-if="isLoading && !store.summary" class="flex flex-col gap-[20px]">
+      <div class="grid grid-cols-3 gap-[16px]">
+        <div v-for="i in 3" :key="i" class="skeleton h-[120px] rounded-[var(--radius-card)]" />
       </div>
-      <div class="skeleton" style="height: 340px; border-radius: var(--radius-card)" />
+      <div class="skeleton h-[340px] rounded-[var(--radius-card)]" />
     </div>
 
     <!-- Content -->
     <template v-else>
       <!-- KPI Cards -->
-      <div
-        style="
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
-          margin-bottom: 20px;
-        "
-      >
+      <div class="kpi-grid grid grid-cols-3 gap-[16px] mb-[20px]">
         <SummaryCard
           title="Pemasukan"
           :value="store.summary?.total_income || 0"
@@ -141,13 +118,7 @@ const isLoading = computed(() => store.isLoading);
       </div>
 
       <!-- Chart + Recent Transactions -->
-      <div
-        style="
-          display: grid;
-          grid-template-columns: 1.6fr 1fr;
-          gap: 16px;
-        "
-      >
+      <div class="chart-recent-grid grid grid-cols-[1.6fr_1fr] gap-[16px]">
         <IncomeExpenseChart :chartData="store.summary?.chart_data || []" />
         <RecentTransactions :transactions="txStore.transactions" />
       </div>
@@ -157,15 +128,15 @@ const isLoading = computed(() => store.isLoading);
 
 <style scoped>
 @media (max-width: 900px) {
-  div > div[style*="grid-template-columns: repeat(3, 1fr)"] {
+  .kpi-grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  div > div[style*="grid-template-columns: 1.6fr 1fr"] {
+  .chart-recent-grid {
     grid-template-columns: 1fr !important;
   }
 }
 @media (max-width: 500px) {
-  div > div[style*="grid-template-columns: repeat(3, 1fr)"] {
+  .kpi-grid {
     grid-template-columns: 1fr !important;
   }
 }
