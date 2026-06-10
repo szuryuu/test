@@ -51,7 +51,7 @@ func (h *ReportHandler) GenerateMonthly(c *gin.Context) {
 		return
 	}
 	if umkm != nil {
-		if _, sendErr := h.svc.GenerateAndSend(c.Request.Context(), umkmID, umkm.PhoneNumber, req.Year, req.Month); sendErr != nil {
+		if sendErr := h.svc.SendReport(c.Request.Context(), umkm.PhoneNumber, report.ReportText); sendErr != nil {
 			slog.Error("gagal kirim laporan via WhatsApp", "umkm_id", umkmID, "error", sendErr)
 		}
 	}

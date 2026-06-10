@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"time"
@@ -14,6 +15,9 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
+
+// ErrPhoneAlreadyExists adalah sentinel error untuk nomor WhatsApp yang sudah terdaftar.
+var ErrPhoneAlreadyExists = errors.New("nomor WhatsApp sudah terdaftar")
 
 type AuthService interface {
 	Register(ctx context.Context, req RegisterRequest) (*model.Umkm, string, error)
@@ -45,7 +49,7 @@ func (s *authService) Register(ctx context.Context, req RegisterRequest) (*model
 		return nil, "", fmt.Errorf("auth_service.Register: check phone: %w", err)
 	}
 	if existing != nil {
-		return nil, "", fmt.Errorf("nomor WhatsApp sudah terdaftar")
+		return nil, "", ErrPhoneAlreadyExists
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(req.Password), 12)

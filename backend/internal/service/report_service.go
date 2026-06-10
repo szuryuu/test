@@ -24,6 +24,7 @@ type MonthlyReport struct {
 type ReportService interface {
 	GenerateMonthly(ctx context.Context, umkmID uuid.UUID, year, month int) (*MonthlyReport, error)
 	GenerateAndSend(ctx context.Context, umkmID uuid.UUID, phoneNumber string, year, month int) (string, error)
+	SendReport(ctx context.Context, phoneNumber, reportText string) error
 }
 
 type reportService struct {
@@ -130,6 +131,12 @@ func (s *reportService) GenerateMonthly(ctx context.Context, umkmID uuid.UUID, y
 	)
 
 	return report, nil
+}
+
+// SendReport mengirim teks laporan yang sudah di-generate via WhatsApp.
+// Tidak melakukan query ulang — gunakan report yang sudah ada.
+func (s *reportService) SendReport(ctx context.Context, phoneNumber, reportText string) error {
+	return s.fonnte.SendMessage(phoneNumber, reportText)
 }
 
 // GenerateAndSend membuat laporan dan mengirimnya via WhatsApp.

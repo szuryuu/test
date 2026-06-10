@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"log/slog"
 	"net/http"
 
@@ -26,7 +27,7 @@ func (h *AuthHandler) Register(c *gin.Context) {
 
 	umkm, token, err := h.svc.Register(c.Request.Context(), req)
 	if err != nil {
-		if err.Error() == "nomor WhatsApp sudah terdaftar" {
+		if errors.Is(err, service.ErrPhoneAlreadyExists) {
 			ErrorResponse(c, http.StatusConflict, ErrPhoneAlreadyExists)
 			return
 		}
