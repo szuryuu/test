@@ -23,6 +23,7 @@ type KurScoreResult struct {
 	MonthsOfData      int      `json:"months_of_data"`
 	Recommendations   []string `json:"recommendations"`
 	CalculatedAt      string   `json:"calculated_at"`
+	IsStale           bool     `json:"is_stale"`
 }
 
 type KurService interface {
@@ -46,7 +47,9 @@ func (s *kurService) GetScore(ctx context.Context, umkmID uuid.UUID) (*KurScoreR
 		return s.calculate(ctx, umkmID)
 	}
 	if cached != nil {
-		return kurScoreToResult(cached), nil
+		result := kurScoreToResult(cached)
+		result.IsStale = time.Since(cached.CalculatedAt) > 24*time.Hour
+		return result, nil
 	}
 	// Belum ada skor — hitung baru
 	return s.calculate(ctx, umkmID)

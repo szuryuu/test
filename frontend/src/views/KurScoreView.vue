@@ -175,6 +175,22 @@ async function recalculate() {
       v-if="score"
       style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
     >
+      <!-- Staleness warning -->
+      <div
+        v-if="score.is_stale"
+        style="grid-column: 1 / -1;
+          padding: 12px 16px;
+          background: rgba(245, 158, 11, 0.08);
+          border: 1px solid rgba(245, 158, 11, 0.25);
+          border-radius: var(--radius-card);
+          display: flex; align-items: center; gap: 10px;
+          font-size: 13px; color: #92400e;
+        "
+      >
+        <i class="pi pi-clock" style="font-size: 16px; flex-shrink: 0" />
+        <span>Data mungkin sudah tidak akurat. Klik <strong>"Hitung Ulang"</strong> untuk memperbarui.</span>
+      </div>
+
       <!-- Left column -->
       <div style="display: flex; flex-direction: column; gap: 16px">
         <KurScoreGauge :score="score.score || 0" />
