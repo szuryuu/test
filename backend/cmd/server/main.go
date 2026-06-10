@@ -31,6 +31,12 @@ func main() {
 	}
 	defer pool.Close()
 
+	// Auto-run migrations
+	if err := repository.RunMigrations(cfg); err != nil {
+		slog.Error("gagal menjalankan migration", "error", err)
+		os.Exit(1)
+	}
+
 	// Repositories
 	umkmRepo := repository.NewUmkmRepo(pool)
 	transactionRepo := repository.NewTransactionRepo(pool)
@@ -45,7 +51,7 @@ func main() {
 	dashboardService := service.NewDashboardService(transactionRepo)
 	kurService := service.NewKurService(transactionRepo)
 	reportService := service.NewReportService(transactionRepo, fonnteClient)
-	transactionService := service.NewTransactionService(transactionRepo, aiParser, fonnteClient, dashboardService, reportService)
+	transactionService := service.NewTransactionService(transactionRepo, aiParser, fonnteClient, dashboardService, reportService, kurService)
 
 	// Handlers
 	authHandler := handler.NewAuthHandler(authService)
@@ -58,6 +64,9 @@ func main() {
 	r := gin.New()
 	r.Use(middleware.Logger())
 	r.Use(middleware.CORS(cfg))
+
+	// Health check — no auth, before api group
+	r.GET("/health", handler.HealthCheck)
 
 	// Webhook — no auth
 	r.POST("/webhook/whatsapp", webhookHandler.Handle)
@@ -74,7 +83,7 @@ func main() {
 		// Protected routes
 		// KUR & Report handlers (thin wrappers over services)
 		kurHandler := handler.NewKurHandler(kurService)
-		reportHandler := handler.NewReportHandler(reportService)
+		reportHandler := handler.NewReportHandler(reportService, umkmRepo)
 
 		protected := api.Group("")
 		protected.Use(middleware.Auth(authService))
@@ -96,6 +105,7 @@ func main() {
 	}
 
 	addr := fmt.Sprintf(":%s", cfg.AppPort)
+	handler.IsReady.Store(true)
 	slog.Info("server berjalan", "addr", addr)
 	if err := r.Run(addr); err != nil {
 		slog.Error("server gagal", "error", err)
