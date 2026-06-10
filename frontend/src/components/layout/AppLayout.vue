@@ -26,47 +26,22 @@ provide("isMobile", isMobile);
 </script>
 
 <template>
-  <div
-    class="app-layout"
-    style="display: flex; min-height: 100vh; background: var(--color-bg)"
-  >
+  <div class="app-layout flex min-h-screen bg-[var(--color-bg)]">
     <!-- Sidebar overlay (mobile) -->
     <div
       v-if="isMobile && sidebarOpen"
       @click="toggleSidebar"
-      style="
-        position: fixed; inset: 0; z-index: 40;
-        background: rgba(15, 23, 42, 0.5);
-        -webkit-backdrop-filter: blur(2px);
-        backdrop-filter: blur(2px);
-      "
+      class="fixed inset-0 z-40 bg-[rgba(15,23,42,0.5)] backdrop-blur-[2px]"
     />
 
     <!-- Sidebar -->
     <AppSidebar />
 
     <!-- Main area -->
-    <div
-      style="
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      "
-    >
+    <div class="flex-1 flex flex-col min-w-0 transition-[margin-left] duration-[0.3s] ease-[cubic-bezier(0.4,0,0.2,1)]">
       <AppTopbar />
 
-      <main
-        style="
-          flex: 1;
-          overflow-y: auto;
-          padding: 24px;
-          max-width: 1280px;
-          width: 100%;
-          margin: 0 auto;
-        "
-      >
+      <main class="flex-1 overflow-y-auto p-[24px] max-w-[1280px] w-full mx-auto">
         <router-view v-slot="{ Component }">
           <transition name="page" mode="out-in">
             <component :is="Component" />
