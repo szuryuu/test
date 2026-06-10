@@ -39,54 +39,32 @@ const accentConfig = computed(() => {
 
 <template>
   <div
-    class="summary-card"
-    style="
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 20px;
-      transition: all 0.2s ease;
-    "
+    class="summary-card bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] p-[20px] transition-all duration-[0.2s] ease"
     @mouseenter="$event.target.style.boxShadow = 'var(--shadow-elevated)'; $event.target.style.borderColor = 'var(--color-border-hover)'"
     @mouseleave="$event.target.style.boxShadow = 'var(--shadow-card)'; $event.target.style.borderColor = 'var(--color-border)'"
   >
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px">
+    <div class="flex justify-between items-start mb-[16px]">
       <div
-        style="
-          width: 40px; height: 40px; border-radius: 10px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 18px;
-        "
+        class="w-[40px] h-[40px] rounded-[10px] flex items-center justify-center text-[18px]"
         :style="{ background: accentConfig.iconBg, color: accentConfig.color }"
       >
         <i v-if="icon" :class="icon" />
       </div>
       <span
         v-if="trend"
-        style="
-          font-size: 11px; font-weight: 500; padding: 2px 8px;
-          border-radius: 999px;
-        "
+        class="text-[11px] font-medium py-[2px] px-[8px] rounded-[999px]"
         :style="{ background: accentConfig.bg, color: accentConfig.color }"
       >
         {{ trend }}
       </span>
     </div>
 
-    <p
-      style="
-        margin: 0 0 4px; font-size: 13px; font-weight: 500;
-        color: var(--color-text-secondary);
-      "
-    >
+    <p class="m-0 mb-[4px] text-[13px] font-medium text-[var(--color-text-secondary)]">
       {{ title }}
     </p>
 
     <p
-      style="
-        margin: 0; font-size: 26px; font-weight: 700;
-        letter-spacing: -0.03em;
-      "
+      class="m-0 text-[26px] font-bold tracking-[-0.03em]"
       :style="{ color: accentConfig.color }"
     >
       {{ formatRupiah(value) }}
