@@ -153,6 +153,10 @@ func (r *transactionRepo) FindByUmkmID(ctx context.Context, umkmID uuid.UUID, fi
 		txs = append(txs, tx)
 	}
 
+	if err := rows.Err(); err != nil {
+		return nil, 0, fmt.Errorf("transaction_repo.FindByUmkmID: rows: %w", err)
+	}
+
 	return txs, total, nil
 }
 
@@ -239,6 +243,10 @@ func (r *transactionRepo) ChartData(ctx context.Context, umkmID uuid.UUID, start
 		data = append(data, d)
 	}
 
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("transaction_repo.ChartData: rows: %w", err)
+	}
+
 	return data, nil
 }
 
@@ -278,6 +286,10 @@ func (r *transactionRepo) CategorySummary(ctx context.Context, umkmID uuid.UUID,
 			return nil, fmt.Errorf("transaction_repo.CategorySummary: scan: %w", err)
 		}
 		cats = append(cats, c)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("transaction_repo.CategorySummary: rows: %w", err)
 	}
 
 	return cats, nil
@@ -332,6 +344,10 @@ func (r *transactionRepo) MonthlyIncomeValues(ctx context.Context, umkmID uuid.U
 		}
 		values = append(values, v)
 	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("transaction_repo.MonthlyIncomeValues: rows: %w", err)
+	}
+
 	return values, nil
 }
 
