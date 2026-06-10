@@ -60,54 +60,21 @@ const initials = computed(() => {
 <template>
   <aside
     v-show="sidebarOpen"
-    class="sidebar"
-    style="
-      width: var(--sidebar-w);
-      background: #0f172a;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      position: sticky;
-      top: 0;
-      flex-shrink: 0;
-      z-index: 50;
-      overflow: hidden;
-    "
+    class="sidebar w-[var(--sidebar-w)] bg-[#0f172a] flex flex-col h-screen sticky top-0 shrink-0 z-50 overflow-hidden"
   >
     <!-- Brand -->
-    <div
-      style="
-        padding: 20px 20px 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      "
-    >
-      <div style="display: flex; align-items: center; gap: 10px">
+    <div class="pt-[20px] px-[20px] pb-[16px] border-b border-[rgba(255,255,255,0.06)]">
+      <div class="flex items-center gap-[10px]">
         <div
-          style="
-            width: 36px; height: 36px; border-radius: 10px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; color: white; font-weight: 700;
-            flex-shrink: 0;
-          "
+          class="w-[36px] h-[36px] rounded-[10px] bg-[linear-gradient(135deg,#10b981,#059669)] flex items-center justify-center text-[18px] text-white font-bold shrink-0"
         >
           K
         </div>
         <div>
-          <h1
-            style="
-              margin: 0; font-size: 18px; font-weight: 700;
-              color: white; letter-spacing: -0.02em; line-height: 1.2;
-            "
-          >
-            Kasir<span style="color: #34d399">AI</span>
+          <h1 class="m-0 text-[18px] font-bold text-white tracking-[-0.02em] leading-[1.2]">
+            Kasir<span class="text-[#34d399]">AI</span>
           </h1>
-          <p
-            style="
-              margin: 0; font-size: 11px; color: rgba(255,255,255,0.4);
-              letter-spacing: 0.02em;
-            "
-          >
+          <p class="m-0 text-[11px] text-[rgba(255,255,255,0.4)] tracking-[0.02em]">
             Keuangan UMKM
           </p>
         </div>
@@ -115,37 +82,17 @@ const initials = computed(() => {
     </div>
 
     <!-- Navigation -->
-    <nav
-      style="
-        flex: 1; padding: 12px 12px; overflow-y: auto;
-      "
-    >
-      <p
-        style="
-          margin: 0 0 4px; padding: 8px 12px 4px;
-          font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.3);
-          text-transform: uppercase; letter-spacing: 0.08em;
-        "
-      >
+    <nav class="flex-1 p-[12px] overflow-y-auto">
+      <p class="m-0 mb-[4px] pt-[8px] pr-[12px] pb-[4px] pl-[12px] text-[11px] font-semibold text-[rgba(255,255,255,0.3)] uppercase tracking-[0.08em]">
         Menu Utama
       </p>
 
-      <ul
-        style="
-          list-style: none; padding: 0; margin: 0;
-          display: flex; flex-direction: column; gap: 2px;
-        "
-      >
+      <ul class="list-none p-0 m-0 flex flex-col gap-[2px]">
         <li v-for="item in menuItems" :key="item.route">
           <button
             @click="navigate(item.route)"
             :title="item.description"
-            style="
-              width: 100%; display: flex; align-items: center; gap: 12px;
-              padding: 10px 12px; border: none; cursor: pointer;
-              text-align: left; font-size: 14px; font-family: inherit;
-              border-radius: 8px; transition: all 0.15s ease;
-            "
+            class="w-full flex items-center gap-[12px] py-[10px] px-[12px] border-0 cursor-pointer text-left text-[14px] font-[inherit] rounded-[8px] transition-all duration-[0.15s] ease"
             :style="{
               background: isActive(item.route)
                 ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1))'
@@ -161,12 +108,7 @@ const initials = computed(() => {
               : 'transparent'"
           >
             <span
-              style="
-                width: 32px; height: 32px; border-radius: 8px;
-                display: flex; align-items: center; justify-content: center;
-                flex-shrink: 0; font-size: 15px;
-                transition: all 0.15s ease;
-              "
+              class="w-[32px] h-[32px] rounded-[8px] flex items-center justify-center shrink-0 text-[15px] transition-all duration-[0.15s] ease"
               :style="{
                 background: isActive(item.route)
                   ? 'rgba(16, 185, 129, 0.2)'
@@ -178,13 +120,7 @@ const initials = computed(() => {
             </span>
             <div>
               <span>{{ item.label }}</span>
-              <p
-                v-if="!isMobile"
-                style="
-                  margin: 0; font-size: 11px;
-                  color: rgba(255,255,255,0.3);
-                "
-              >
+              <p v-if="!isMobile" class="m-0 text-[11px] text-[rgba(255,255,255,0.3)]">
                 {{ item.description }}
               </p>
             </div>
@@ -194,44 +130,18 @@ const initials = computed(() => {
     </nav>
 
     <!-- User footer -->
-    <div
-      style="
-        padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.06);
-      "
-    >
-      <div
-        style="
-          display: flex; align-items: center; gap: 10px;
-          padding: 10px 12px; border-radius: 8px;
-          background: rgba(255, 255, 255, 0.04);
-        "
-      >
+    <div class="p-[12px] border-t border-[rgba(255,255,255,0.06)]">
+      <div class="flex items-center gap-[10px] py-[10px] px-[12px] rounded-[8px] bg-[rgba(255,255,255,0.04)]">
         <div
-          style="
-            width: 34px; height: 34px; border-radius: 8px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 12px; color: white; font-weight: 700;
-            flex-shrink: 0;
-          "
+          class="w-[34px] h-[34px] rounded-[8px] bg-[linear-gradient(135deg,#6366f1,#8b5cf6)] flex items-center justify-center text-[12px] text-white font-bold shrink-0"
         >
           {{ initials }}
         </div>
-        <div style="flex: 1; min-width: 0">
-          <p
-            style="
-              margin: 0; font-size: 13px; color: white; font-weight: 500;
-              overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-            "
-          >
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-[13px] text-white font-medium truncate">
             {{ auth.umkm?.business_name || "UMKM" }}
           </p>
-          <p
-            style="
-              margin: 0; font-size: 11px; color: rgba(255,255,255,0.35);
-              overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-            "
-          >
+          <p class="m-0 text-[11px] text-[rgba(255,255,255,0.35)] truncate">
             {{ auth.umkm?.phone_number || "" }}
           </p>
         </div>
