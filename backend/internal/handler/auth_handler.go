@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"log/slog"
 	"net/http"
 
 	"kasiraiai/backend/internal/service"
@@ -29,6 +30,7 @@ func (h *AuthHandler) Register(c *gin.Context) {
 			ErrorResponse(c, http.StatusConflict, ErrPhoneAlreadyExists)
 			return
 		}
+		slog.Error("gagal register UMKM", "error", err)
 		InternalServerError(c, ErrInternalServer)
 		return
 	}

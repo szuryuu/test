@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 	"strconv"
+	"time"
 
 	"kasiraiai/backend/internal/model"
 	"kasiraiai/backend/internal/repository"
@@ -37,6 +38,16 @@ func (h *TransactionHandler) List(c *gin.Context) {
 		EndDate:   c.Query("end_date"),
 		Page:      page,
 		Limit:     limit,
+	}
+
+	// Validasi format tanggal
+	if filter.StartDate != "" && !isValidDate(filter.StartDate) {
+		BadRequest(c, "Format tanggal tidak valid. Gunakan YYYY-MM-DD.")
+		return
+	}
+	if filter.EndDate != "" && !isValidDate(filter.EndDate) {
+		BadRequest(c, "Format tanggal tidak valid. Gunakan YYYY-MM-DD.")
+		return
 	}
 
 	txs, total, err := h.svc.FindByUmkmID(c.Request.Context(), umkmID, filter)
@@ -92,6 +103,7 @@ func (h *TransactionHandler) Create(c *gin.Context) {
 	}
 
 	if err := h.svc.Create(c.Request.Context(), tx); err != nil {
+		slog.Error("gagal buat transaksi manual", "umkm_id", umkmID, "error", err)
 		InternalServerError(c, ErrInternalServer)
 		return
 	}
@@ -115,9 +127,16 @@ func (h *TransactionHandler) Delete(c *gin.Context) {
 	}
 
 	if err := h.svc.SoftDelete(c.Request.Context(), id, umkmID); err != nil {
+		slog.Error("gagal hapus transaksi", "id", id, "umkm_id", umkmID, "error", err)
 		InternalServerError(c, ErrInternalServer)
 		return
 	}
 
 	SuccessResponse(c, http.StatusOK, "Transaksi berhasil dihapus", nil)
+}
+
+// isValidDate memvalidasi format YYYY-MM-DD.
+func isValidDate(dateStr string) bool {
+	_, err := time.Parse("2006-01-02", dateStr)
+	return err == nil
 }

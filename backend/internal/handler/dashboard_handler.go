@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"log/slog"
 	"net/http"
 
 	"kasiraiai/backend/internal/service"
@@ -28,6 +29,7 @@ func (h *DashboardHandler) Summary(c *gin.Context) {
 
 	summary, err := h.svc.GetSummary(c.Request.Context(), umkmID, period, date)
 	if err != nil {
+		slog.Error("gagal ambil ringkasan dashboard", "umkm_id", umkmID, "error", err)
 		InternalServerError(c, ErrInternalServer)
 		return
 	}
@@ -43,10 +45,12 @@ func (h *DashboardHandler) Categories(c *gin.Context) {
 	}
 
 	period := c.DefaultQuery("period", "monthly")
+	date := c.DefaultQuery("date", "")
 	txType := c.DefaultQuery("type", "expense")
 
-	cats, err := h.svc.GetCategoryBreakdown(c.Request.Context(), umkmID, period, txType)
+	cats, err := h.svc.GetCategoryBreakdown(c.Request.Context(), umkmID, period, date, txType)
 	if err != nil {
+		slog.Error("gagal ambil kategori dashboard", "umkm_id", umkmID, "error", err)
 		InternalServerError(c, ErrInternalServer)
 		return
 	}

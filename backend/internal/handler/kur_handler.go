@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"log/slog"
 	"net/http"
 
 	"kasiraiai/backend/internal/service"
@@ -25,6 +26,7 @@ func (h *KurHandler) GetScore(c *gin.Context) {
 
 	result, err := h.svc.GetScore(c.Request.Context(), umkmID)
 	if err != nil {
+		slog.Error("gagal ambil skor KUR", "umkm_id", umkmID, "error", err)
 		InternalServerError(c, ErrInternalServer)
 		return
 	}
@@ -41,6 +43,7 @@ func (h *KurHandler) Recalculate(c *gin.Context) {
 
 	result, err := h.svc.Recalculate(c.Request.Context(), umkmID)
 	if err != nil {
+		slog.Error("gagal hitung ulang skor KUR", "umkm_id", umkmID, "error", err)
 		InternalServerError(c, ErrInternalServer)
 		return
 	}

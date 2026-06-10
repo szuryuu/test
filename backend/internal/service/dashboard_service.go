@@ -26,7 +26,7 @@ type CategoryBreakdown struct {
 
 type DashboardService interface {
 	GetSummary(ctx context.Context, umkmID uuid.UUID, period, date string) (*DashboardSummary, error)
-	GetCategoryBreakdown(ctx context.Context, umkmID uuid.UUID, period, txType string) (*CategoryBreakdown, error)
+	GetCategoryBreakdown(ctx context.Context, umkmID uuid.UUID, period, date, txType string) (*CategoryBreakdown, error)
 }
 
 type dashboardService struct {
@@ -65,8 +65,8 @@ func (s *dashboardService) GetSummary(ctx context.Context, umkmID uuid.UUID, per
 	}, nil
 }
 
-func (s *dashboardService) GetCategoryBreakdown(ctx context.Context, umkmID uuid.UUID, period, txType string) (*CategoryBreakdown, error) {
-	start, end := periodRange(period, "")
+func (s *dashboardService) GetCategoryBreakdown(ctx context.Context, umkmID uuid.UUID, period, date, txType string) (*CategoryBreakdown, error) {
+	start, end := periodRange(period, date)
 	cats, err := s.repo.CategorySummary(ctx, umkmID, start, end, txType)
 	if err != nil {
 		return nil, fmt.Errorf("dashboard_service.GetCategoryBreakdown: %w", err)

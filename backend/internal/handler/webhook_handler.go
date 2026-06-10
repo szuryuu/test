@@ -43,6 +43,8 @@ func (h *WebhookHandler) Handle(c *gin.Context) {
 	umkm, err := h.umkmRepo.FindByPhone(c.Request.Context(), sender)
 	if err != nil {
 		slog.Error("gagal mencari UMKM", "sender", sender, "error", err)
+		// Kirim pesan error ke user meskipun DB gagal
+		_ = h.fonnte.SendMessage(sender, "Mohon maaf, sistem sedang sibuk. Silakan coba lagi nanti.")
 		c.String(http.StatusOK, "OK")
 		return
 	}
