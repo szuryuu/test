@@ -47,21 +47,10 @@ const initials = computed(() => {
 
 <template>
   <header
-    style="
-      background: var(--color-surface);
-      border-bottom: 1px solid var(--color-border);
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      position: sticky;
-      top: 0;
-      z-index: 30;
-    "
+    class="app-topbar bg-[var(--color-surface)] border-b border-[var(--color-border)] h-[64px] flex items-center justify-between px-[24px] sticky top-0 z-30"
   >
     <!-- Left: hamburger + title -->
-    <div style="display: flex; align-items: center; gap: 16px; min-width: 0">
+    <div class="flex items-center gap-[16px] min-w-0">
       <!-- Hamburger (always visible on mobile) -->
       <button
         @click="toggleSidebar"
@@ -86,43 +75,27 @@ const initials = computed(() => {
         <i class="pi pi-bars" />
       </button>
 
-      <div style="min-width: 0">
-        <h1
-          style="
-            margin: 0; font-size: 20px; font-weight: 700;
-            color: var(--color-text); letter-spacing: -0.02em;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-          "
-        >
+      <div class="min-w-0">
+        <h1 class="m-0 text-[20px] font-bold text-[var(--color-text)] tracking-[-0.02em] truncate">
           {{ pageTitle }}
         </h1>
-        <p
-          v-if="!isMobile"
-          style="
-            margin: 0; font-size: 13px; color: var(--color-text-secondary);
-          "
-        >
+        <p v-if="!isMobile" class="m-0 text-[13px] text-[var(--color-text-secondary)]">
           {{ pageSubtitle }}
         </p>
       </div>
     </div>
 
     <!-- Right: user info + logout -->
-    <div style="display: flex; align-items: center; gap: 12px">
+    <div class="flex items-center gap-[12px]">
       <span
         v-if="!isMobile"
-        style="font-size: 13px; color: var(--color-text-secondary)"
+        class="text-[13px] text-[var(--color-text-secondary)]"
       >
         {{ auth.umkm?.name || "" }}
       </span>
 
       <div
-        style="
-          width: 36px; height: 36px; border-radius: 8px;
-          background: linear-gradient(135deg, #6366f1, #8b5cf6);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 12px; color: white; font-weight: 700;
-        "
+        class="w-[36px] h-[36px] rounded-[8px] bg-[linear-gradient(135deg,#6366f1,#8b5cf6)] flex items-center justify-center text-[12px] text-white font-bold"
         :title="auth.umkm?.name || 'User'"
       >
         {{ initials }}
@@ -130,25 +103,11 @@ const initials = computed(() => {
 
       <button
         @click="handleLogout"
-        style="
-          background: transparent;
-          border: 1px solid var(--color-border);
-          cursor: pointer;
-          padding: 7px 14px;
-          border-radius: 8px;
-          font-size: 13px;
-          font-weight: 500;
-          font-family: inherit;
-          color: var(--color-text-secondary);
-          transition: all 0.15s ease;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        "
+        class="bg-transparent border border-[var(--color-border)] cursor-pointer py-[7px] px-[14px] rounded-[8px] text-[13px] font-medium font-[inherit] text-[var(--color-text-secondary)] transition-all duration-[0.15s] ease flex items-center gap-[6px]"
         @mouseenter="$event.target.style.background = 'var(--color-bg)'"
         @mouseleave="$event.target.style.background = 'transparent'"
       >
-        <i class="pi pi-sign-out" style="font-size: 13px" />
+        <i class="pi pi-sign-out text-[13px]" />
         <span v-if="!isMobile">Keluar</span>
       </button>
     </div>
