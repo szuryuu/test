@@ -8,80 +8,44 @@ defineProps({
 
 <template>
   <div
-    style="
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 20px;
-      box-shadow: var(--shadow-card);
-    "
+    class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] p-[20px] shadow-[var(--shadow-card)]"
   >
-    <div
-      style="
-        display: flex; justify-content: space-between;
-        align-items: center; margin-bottom: 16px;
-      "
-    >
-      <h3
-        style="
-          margin: 0; font-size: 15px; font-weight: 600;
-          color: var(--color-text);
-        "
-      >
+    <div class="flex justify-between items-center mb-[16px]">
+      <h3 class="m-0 text-[15px] font-semibold text-[var(--color-text)]">
         Transaksi Terbaru
       </h3>
-      <span
-        style="
-          font-size: 11px; color: var(--color-text-tertiary);
-        "
-      >
+      <span class="text-[11px] text-[var(--color-text-tertiary)]">
         {{ transactions.length }} transaksi
       </span>
     </div>
 
     <!-- Empty state -->
-    <div
-      v-if="!transactions.length"
-      style="text-align: center; padding: 24px 0"
-    >
+    <div v-if="!transactions.length" class="text-center py-[24px]">
       <div
-        style="
-          width: 48px; height: 48px; border-radius: 12px;
-          background: var(--color-bg); margin: 0 auto 10px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 20px; color: var(--color-text-tertiary);
-        "
+        class="w-[48px] h-[48px] rounded-[12px] bg-[var(--color-bg)] mx-auto mb-[10px] flex items-center justify-center text-[20px] text-[var(--color-text-tertiary)]"
       >
         <i class="pi pi-inbox" />
       </div>
-      <p style="font-size: 14px; color: var(--color-text-secondary); margin: 0">
+      <p class="text-[14px] text-[var(--color-text-secondary)] m-0">
         Belum ada transaksi
       </p>
-      <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 4px 0 0">
+      <p class="text-[12px] text-[var(--color-text-tertiary)] mt-[4px]">
         Kirim pesan via WhatsApp untuk memulai
       </p>
     </div>
 
     <!-- Transaction list -->
-    <div v-else style="display: flex; flex-direction: column; gap: 2px">
+    <div v-else class="flex flex-col gap-[2px]">
       <div
         v-for="tx in transactions.slice(0, 5)"
         :key="tx.id"
-        style="
-          display: flex; align-items: center; gap: 12px;
-          padding: 10px 8px; border-radius: 8px;
-          transition: background 0.15s ease;
-        "
+        class="flex items-center gap-[12px] py-[10px] px-[8px] rounded-[8px] transition-[background] duration-[0.15s] ease"
         @mouseenter="$event.target.style.background = 'var(--color-bg)'"
         @mouseleave="$event.target.style.background = 'transparent'"
       >
         <!-- Type icon -->
         <div
-          style="
-            width: 36px; height: 36px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 15px; flex-shrink: 0;
-          "
+          class="w-[36px] h-[36px] rounded-[8px] flex items-center justify-center text-[15px] shrink-0"
           :style="{
             background: tx.type === 'income' ? 'var(--color-income-bg)' : 'var(--color-expense-bg)',
             color: tx.type === 'income' ? 'var(--color-income)' : 'var(--color-expense)',
@@ -91,30 +55,18 @@ defineProps({
         </div>
 
         <!-- Description + date -->
-        <div style="flex: 1; min-width: 0">
-          <p
-            style="
-              margin: 0; font-size: 13px; font-weight: 500;
-              color: var(--color-text);
-              overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-            "
-          >
+        <div class="flex-1 min-w-0">
+          <p class="m-0 text-[13px] font-medium text-[var(--color-text)] truncate">
             {{ tx.description }}
           </p>
-          <p
-            style="
-              margin: 0; font-size: 11px; color: var(--color-text-tertiary);
-            "
-          >
+          <p class="m-0 text-[11px] text-[var(--color-text-tertiary)]">
             {{ formatDate(tx.transaction_date) }}
           </p>
         </div>
 
         <!-- Amount -->
         <span
-          style="
-            font-size: 13px; font-weight: 600; white-space: nowrap;
-          "
+          class="text-[13px] font-semibold whitespace-nowrap"
           :style="{
             color: tx.type === 'income' ? 'var(--color-income)' : 'var(--color-expense)',
           }"
