@@ -166,3 +166,44 @@ body {
     text-align: left;
   }
 }
+
+/* ── Print Styles ── */
+@media print {
+  /* Hide chrome */
+  .sidebar,
+  .app-topbar,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Hide mobile sidebar overlay */
+  [class*="backdrop-blur"] {
+    display: none !important;
+  }
+
+  /* Full-width content */
+  .app-layout {
+    display: block !important;
+  }
+  .app-layout > div:last-child {
+    margin-left: 0 !important;
+  }
+
+  /* Clean paper background */
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+  }
+
+  /* Ensure cards print with borders */
+  [style*="--color-surface"] {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+
+  /* Avoid page breaks inside key blocks */
+  h1, h3, table {
+    break-inside: avoid;
+  }
+}
