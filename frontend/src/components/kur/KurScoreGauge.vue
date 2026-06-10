@@ -65,79 +65,36 @@ const chartConfig = computed(() => ({
 
 <template>
   <div
-    style="
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 24px;
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    "
+    class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] p-[24px] shadow-[var(--shadow-card)] flex flex-col items-center text-center"
   >
-    <h3
-      style="
-        margin: 0 0 16px;
-        font-size: 15px;
-        font-weight: 600;
-        color: var(--color-text);
-      "
-    >
+    <h3 class="m-0 mb-[16px] text-[15px] font-semibold text-[var(--color-text)]">
       Skor Kesiapan KUR
     </h3>
 
-    <div
-      style="
-        position: relative;
-        width: 160px;
-        height: 160px;
-        margin: 0 auto 12px;
-      "
-    >
+    <div class="relative w-[160px] h-[160px] mx-auto mb-[12px]">
       <Doughnut :data="chartConfig.data" :options="chartConfig.options" />
       <div
-        style="
-          position: absolute;
-          top: 52%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          text-align: center;
-          width: 100%;
-        "
+        class="absolute top-[52%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-center w-full"
       >
         <p
-          style="
-            margin: 0;
-            font-size: 36px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1;
-          "
+          class="m-0 text-[36px] font-extrabold tracking-[-0.03em] leading-none"
           :style="{ color: levelConfig.color }"
         >
           {{ score }}
         </p>
-        <p
-          style="
-            margin: 2px 0 0;
-            font-size: 12px;
-            color: var(--color-text-tertiary);
-          "
-        >
+        <p class="mt-[2px] text-[12px] text-[var(--color-text-tertiary)]">
           / 100
         </p>
       </div>
     </div>
 
     <p
-      style="margin: 8px 0 4px; font-size: 16px; font-weight: 700"
+      class="mt-[8px] mb-[4px] text-[16px] font-bold"
       :style="{ color: levelConfig.color }"
     >
       {{ levelConfig.label }}
     </p>
-    <p style="margin: 0; font-size: 12px; color: var(--color-text-secondary)">
+    <p class="m-0 text-[12px] text-[var(--color-text-secondary)]">
       {{ levelConfig.desc }}
     </p>
   </div>
