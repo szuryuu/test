@@ -69,7 +69,7 @@ func (s *reportService) GenerateMonthly(ctx context.Context, umkmID uuid.UUID, y
 		topCategories = append(topCategories, fmt.Sprintf("📥 %s: Rp%s (%.0f%%)", c.Name, formatRupiahReport(c.Total), c.Percentage))
 	}
 	for _, c := range expCats {
-		topCategories = append(topCategories, fmt.Sprintf("📤 %s: Rp%s (%.0f%%)", c.Name, formatRupiahReport(c.Total), c.Percentage))
+		topCategories = append(topCategories, fmt.Sprintf("📤 %s: -Rp%s (%.0f%%)", c.Name, formatRupiahReport(c.Total), c.Percentage))
 	}
 
 	// Hitung margin
