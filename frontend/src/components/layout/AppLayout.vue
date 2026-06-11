@@ -41,7 +41,7 @@ provide("isMobile", isMobile);
     <div class="flex-1 flex flex-col min-w-0 transition-[margin-left] duration-[0.3s] ease-[cubic-bezier(0.4,0,0.2,1)]">
       <AppTopbar />
 
-      <main class="flex-1 overflow-y-auto p-[24px] max-w-[1280px] w-full mx-auto">
+      <main class="flex-1 overflow-y-auto overscroll-none p-[24px] max-w-[1280px] w-full mx-auto">
         <router-view v-slot="{ Component }">
           <transition name="page" mode="out-in">
             <component :is="Component" />
