@@ -41,10 +41,13 @@ const chartConfig = computed(() => ({
   data: {
     datasets: [
       {
-        data: [props.score, 100 - props.score],
-        backgroundColor: [levelConfig.value.color, "rgba(226, 232, 240, 0.5)"],
+        data: [props.score, 100 - props.score, 100 / 3],
+        backgroundColor: [
+          levelConfig.value.color,
+          "rgba(226, 232, 240, 0.5)",
+          "transparent",
+        ],
         borderWidth: 0,
-        circumference: 270,
         rotation: 225,
         cutout: "78%",
       },
@@ -67,14 +70,16 @@ const chartConfig = computed(() => ({
   <div
     class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] p-[24px] shadow-[var(--shadow-card)] flex flex-col items-center text-center"
   >
-    <h3 class="m-0 mb-[16px] text-[15px] font-semibold text-[var(--color-text)]">
+    <h3
+      class="m-0 mb-[16px] text-[15px] font-semibold text-[var(--color-text)]"
+    >
       Skor Kesiapan KUR
     </h3>
 
     <div class="relative w-[160px] h-[160px] mx-auto mb-[12px]">
       <Doughnut :data="chartConfig.data" :options="chartConfig.options" />
       <div
-        class="absolute top-[52%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-center w-full"
+        class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-center w-full"
       >
         <p
           class="m-0 text-[36px] font-extrabold tracking-[-0.03em] leading-none"
