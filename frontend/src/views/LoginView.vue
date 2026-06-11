@@ -11,6 +11,11 @@ const password = ref("");
 const isLoading = ref(false);
 const errorMsg = ref("");
 
+const errors = ref({
+  phone: "",
+  password: "",
+});
+
 async function handleLogin() {
   if (!phoneNumber.value || !password.value) {
     errorMsg.value = "Nomor WhatsApp dan password wajib diisi";
@@ -65,6 +70,7 @@ async function handleLogin() {
         </div>
 
         <div class="flex flex-col gap-[16px]">
+          <!-- Phone -->
           <div class="flex flex-col gap-[6px]">
             <label for="phone" class="text-[13px] font-medium text-[var(--color-text)]">
               Nomor WhatsApp
@@ -81,12 +87,16 @@ async function handleLogin() {
                 maxlength="13"
                 pattern="628[0-9]{8,10}"
                 placeholder="6281234567890"
-                class="w-full py-[12px] pr-[12px] pl-[44px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-150 ease-out outline-hidden focus-visible:outline-none focus:border-brand-500 focus:ring-[3px] focus:ring-brand-500/10"
+                class="w-full py-[12px] pr-[12px] pl-[44px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-150 ease-out !outline-none focus:!outline-none focus-visible:!outline-none focus:border-brand-500 focus:ring-[3px] focus:ring-brand-500/10"
                 @keyup.enter="handleLogin"
               />
             </div>
+            <p class="m-0 min-h-[20px] text-[12px] text-red-500 leading-tight">
+              {{ errors.phone }}
+            </p>
           </div>
 
+          <!-- Password -->
           <div class="flex flex-col gap-[6px]">
             <label for="password" class="text-[13px] font-medium text-[var(--color-text)]">
               Password
@@ -100,10 +110,13 @@ async function handleLogin() {
                 v-model="password"
                 type="password"
                 placeholder="Masukkan password"
-                class="w-full py-[12px] pr-[12px] pl-[44px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-150 ease-out outline-hidden focus-visible:outline-none focus:border-brand-500 focus:ring-[3px] focus:ring-brand-500/10"
+                class="w-full py-[12px] pr-[12px] pl-[44px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-150 ease-out !outline-none focus:!outline-none focus-visible:!outline-none focus:border-brand-500 focus:ring-[3px] focus:ring-brand-500/10"
                 @keyup.enter="handleLogin"
               />
             </div>
+            <p class="m-0 min-h-[20px] text-[12px] text-red-500 leading-tight">
+              {{ errors.password }}
+            </p>
           </div>
 
           <button

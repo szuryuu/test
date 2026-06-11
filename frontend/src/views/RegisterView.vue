@@ -81,7 +81,7 @@ function validateAll() {
 
 function inputClasses(field) {
   const base =
-    "w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] rounded-[10px] text-[var(--color-text)] transition-all duration-150 ease-out outline-hidden focus-visible:outline-none";
+    "w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] rounded-[10px] text-[var(--color-text)] transition-all duration-150 ease-out !outline-none focus:!outline-none focus-visible:!outline-none";
   if (errors[field]) {
     return `${base} border border-red-500 focus:ring-[3px] focus:ring-red-500/10`;
   }
@@ -136,9 +136,9 @@ async function handleRegister() {
           </p>
         </div>
 
-        <div class="register-form-grid grid grid-cols-2 gap-[12px]">
+        <div class="register-form-grid grid grid-cols-2 gap-x-[12px]">
           <!-- Nama Lengkap -->
-          <div class="flex flex-col gap-[6px] col-span-2 mb-[28px] relative">
+          <div class="flex flex-col gap-[6px] col-span-2 mb-[32px] relative">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Nama Lengkap
             </label>
@@ -149,13 +149,13 @@ async function handleRegister() {
               :class="inputClasses('name')"
               @blur="validateName()"
             />
-            <p v-if="errors.name" class="absolute left-0 -bottom-[20px] m-0 text-[12px] text-red-500 leading-tight">
+            <p v-if="errors.name" class="absolute left-0 -bottom-[8px] m-0 text-[12px] text-red-500 leading-tight">
               {{ errors.name }}
             </p>
           </div>
 
           <!-- Nama Usaha -->
-          <div class="flex flex-col gap-[6px] col-span-2 mb-[28px] relative">
+          <div class="flex flex-col gap-[6px] col-span-2 mb-[32px] relative">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Nama Usaha
             </label>
@@ -166,13 +166,13 @@ async function handleRegister() {
               :class="inputClasses('business_name')"
               @blur="validateBusinessName()"
             />
-            <p v-if="errors.business_name" class="absolute left-0 -bottom-[20px] m-0 text-[12px] text-red-500 leading-tight">
+            <p v-if="errors.business_name" class="absolute left-0 -bottom-[8px] m-0 text-[12px] text-red-500 leading-tight">
               {{ errors.business_name }}
             </p>
           </div>
 
           <!-- Nomor WhatsApp -->
-          <div class="flex flex-col gap-[6px] col-span-2 mb-[28px] relative">
+          <div class="flex flex-col gap-[6px] col-span-2 mb-[32px] relative">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Nomor WhatsApp
             </label>
@@ -186,13 +186,13 @@ async function handleRegister() {
               :class="inputClasses('phone_number')"
               @blur="validatePhone()"
             />
-            <p v-if="errors.phone_number" class="absolute left-0 -bottom-[20px] m-0 text-[12px] text-red-500 leading-tight">
+            <p v-if="errors.phone_number" class="absolute left-0 -bottom-[8px] m-0 text-[12px] text-red-500 leading-tight">
               {{ errors.phone_number }}
             </p>
           </div>
 
           <!-- Password -->
-          <div class="flex flex-col gap-[6px] col-span-2 mb-[28px] relative">
+          <div class="flex flex-col gap-[6px] col-span-2 mb-[32px] relative">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Password
             </label>
@@ -203,12 +203,12 @@ async function handleRegister() {
               :class="inputClasses('password')"
               @blur="validatePassword()"
             />
-            <p v-if="errors.password" class="absolute left-0 -bottom-[20px] m-0 text-[12px] text-red-500 leading-tight">
+            <p v-if="errors.password" class="absolute left-0 -bottom-[8px] m-0 text-[12px] text-red-500 leading-tight">
               {{ errors.password }}
             </p>
           </div>
 
-          <!-- Jenis Usaha (opsional — no validation, no fixed bottom margin) -->
+          <!-- Jenis Usaha (opsional) -->
           <div class="flex flex-col gap-[6px] col-span-2">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Jenis Usaha
@@ -216,7 +216,7 @@ async function handleRegister() {
             </label>
             <select
               v-model="form.business_type"
-              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] cursor-pointer transition-all duration-150 ease-out outline-hidden focus-visible:outline-none focus:border-brand-500"
+              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] cursor-pointer transition-all duration-150 ease-out !outline-none focus:!outline-none focus-visible:!outline-none focus:border-brand-500 focus:ring-[3px] focus:ring-brand-500/10"
             >
               <option value="">-- Pilih jenis usaha --</option>
               <option v-for="bt in businessTypes" :key="bt.value" :value="bt.value">
