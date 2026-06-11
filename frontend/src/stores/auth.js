@@ -4,7 +4,14 @@ import { authAPI } from "@/api/auth";
 
 export const useAuthStore = defineStore("auth", () => {
   const token = ref(localStorage.getItem("token") || "");
-  const umkm = ref(JSON.parse(localStorage.getItem("umkm") || "null"));
+  let parsedUmkm = null;
+  try {
+    parsedUmkm = JSON.parse(localStorage.getItem("umkm") || "null");
+  } catch {
+    localStorage.removeItem("umkm"); // clear corrupt entry
+    parsedUmkm = null;
+  }
+  const umkm = ref(parsedUmkm);
 
   const isLoggedIn = () => !!token.value;
 
