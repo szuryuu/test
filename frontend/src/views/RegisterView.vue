@@ -79,34 +79,13 @@ function validateAll() {
   return !Object.values(errors).some(Boolean);
 }
 
-function getInputClass(field) {
-  return errors[field]
-    ? "w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none"
-    : "w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none";
-}
-
-function getInputStyle(field) {
-  return errors[field] ? { borderColor: "#ef4444", boxShadow: "0 0 0 3px rgba(239, 68, 68, 0.1)" } : {};
-}
-
-function onFocus(e, field) {
+function inputClasses(field) {
+  const base =
+    "w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] rounded-[10px] text-[var(--color-text)] transition-all duration-150 ease-out outline-hidden focus-visible:outline-none";
   if (errors[field]) {
-    e.target.style.borderColor = "#ef4444";
-    e.target.style.boxShadow = "0 0 0 3px rgba(239, 68, 68, 0.1)";
-  } else {
-    e.target.style.borderColor = "var(--color-brand-500)";
-    e.target.style.boxShadow = "0 0 0 3px rgba(16, 185, 129, 0.1)";
+    return `${base} border border-red-500 focus:ring-[3px] focus:ring-red-500/10`;
   }
-}
-
-function onBlur(e, field) {
-  if (errors[field]) {
-    e.target.style.borderColor = "#ef4444";
-    e.target.style.boxShadow = "none";
-  } else {
-    e.target.style.borderColor = "var(--color-border)";
-    e.target.style.boxShadow = "none";
-  }
+  return `${base} border border-[var(--color-border)] focus:border-brand-500 focus:ring-[3px] focus:ring-brand-500/10`;
 }
 
 async function handleRegister() {
@@ -137,7 +116,7 @@ async function handleRegister() {
       <!-- Brand header -->
       <div class="pt-[28px] px-[32px] pb-0 text-center">
         <h2 class="m-0 mb-[4px] text-[22px] font-bold text-[var(--color-text)] tracking-[-0.03em]">
-          Daftar Kasir<span class="text-[#10b981]">AI</span>
+          Daftar Kasir<span class="text-brand-500">AI</span>
         </h2>
         <p class="m-0 mb-[20px] text-[14px] text-[var(--color-text-secondary)]">
           Mulai catat keuangan UMKM Anda
@@ -149,17 +128,17 @@ async function handleRegister() {
         <!-- Error -->
         <div
           v-if="errorMsg"
-          class="p-[12px_16px] mb-[20px] bg-[var(--color-expense-bg)] border border-[rgba(239,68,68,0.2)] rounded-[10px] flex items-start gap-[10px]"
+          class="p-[12px_16px] mb-[20px] bg-[var(--color-expense-bg)] border border-red-500/20 rounded-[10px] flex items-start gap-[10px]"
         >
           <i class="pi pi-exclamation-circle text-[var(--color-expense)] text-[16px] mt-[1px] shrink-0" />
-          <p class="m-0 text-[13px] text-[#dc2626] leading-[1.4]">
+          <p class="m-0 text-[13px] text-red-500 leading-[1.4]">
             {{ errorMsg }}
           </p>
         </div>
 
         <div class="register-form-grid grid grid-cols-2 gap-[12px]">
           <!-- Nama Lengkap -->
-          <div class="flex flex-col gap-[6px] col-span-2">
+          <div class="flex flex-col gap-[6px] col-span-2 mb-[28px] relative">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Nama Lengkap
             </label>
@@ -167,16 +146,16 @@ async function handleRegister() {
               v-model="form.name"
               type="text"
               placeholder="Budi Santoso"
-              :class="getInputClass('name')"
-              :style="getInputStyle('name')"
-              @focus="onFocus($event, 'name')"
-              @blur="onBlur($event, 'name'); validateName()"
+              :class="inputClasses('name')"
+              @blur="validateName()"
             />
-            <p v-if="errors.name" class="m-0 text-[12px] text-[#ef4444] leading-[1.3]">{{ errors.name }}</p>
+            <p v-if="errors.name" class="absolute left-0 -bottom-[20px] m-0 text-[12px] text-red-500 leading-tight">
+              {{ errors.name }}
+            </p>
           </div>
 
           <!-- Nama Usaha -->
-          <div class="flex flex-col gap-[6px] col-span-2">
+          <div class="flex flex-col gap-[6px] col-span-2 mb-[28px] relative">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Nama Usaha
             </label>
@@ -184,16 +163,16 @@ async function handleRegister() {
               v-model="form.business_name"
               type="text"
               placeholder="Warung Nasi Budi"
-              :class="getInputClass('business_name')"
-              :style="getInputStyle('business_name')"
-              @focus="onFocus($event, 'business_name')"
-              @blur="onBlur($event, 'business_name'); validateBusinessName()"
+              :class="inputClasses('business_name')"
+              @blur="validateBusinessName()"
             />
-            <p v-if="errors.business_name" class="m-0 text-[12px] text-[#ef4444] leading-[1.3]">{{ errors.business_name }}</p>
+            <p v-if="errors.business_name" class="absolute left-0 -bottom-[20px] m-0 text-[12px] text-red-500 leading-tight">
+              {{ errors.business_name }}
+            </p>
           </div>
 
           <!-- Nomor WhatsApp -->
-          <div class="flex flex-col gap-[6px] col-span-2">
+          <div class="flex flex-col gap-[6px] col-span-2 mb-[28px] relative">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Nomor WhatsApp
             </label>
@@ -204,16 +183,16 @@ async function handleRegister() {
               maxlength="13"
               pattern="628[0-9]{8,10}"
               placeholder="6281234567890"
-              :class="getInputClass('phone_number')"
-              :style="getInputStyle('phone_number')"
-              @focus="onFocus($event, 'phone_number')"
-              @blur="onBlur($event, 'phone_number'); validatePhone()"
+              :class="inputClasses('phone_number')"
+              @blur="validatePhone()"
             />
-            <p v-if="errors.phone_number" class="m-0 text-[12px] text-[#ef4444] leading-[1.3]">{{ errors.phone_number }}</p>
+            <p v-if="errors.phone_number" class="absolute left-0 -bottom-[20px] m-0 text-[12px] text-red-500 leading-tight">
+              {{ errors.phone_number }}
+            </p>
           </div>
 
           <!-- Password -->
-          <div class="flex flex-col gap-[6px] col-span-2">
+          <div class="flex flex-col gap-[6px] col-span-2 mb-[28px] relative">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Password
             </label>
@@ -221,15 +200,15 @@ async function handleRegister() {
               v-model="form.password"
               type="password"
               placeholder="Minimal 6 karakter"
-              :class="getInputClass('password')"
-              :style="getInputStyle('password')"
-              @focus="onFocus($event, 'password')"
-              @blur="onBlur($event, 'password'); validatePassword()"
+              :class="inputClasses('password')"
+              @blur="validatePassword()"
             />
-            <p v-if="errors.password" class="m-0 text-[12px] text-[#ef4444] leading-[1.3]">{{ errors.password }}</p>
+            <p v-if="errors.password" class="absolute left-0 -bottom-[20px] m-0 text-[12px] text-red-500 leading-tight">
+              {{ errors.password }}
+            </p>
           </div>
 
-          <!-- Jenis Usaha (opsional — no validation) -->
+          <!-- Jenis Usaha (opsional — no validation, no fixed bottom margin) -->
           <div class="flex flex-col gap-[6px] col-span-2">
             <label class="text-[13px] font-medium text-[var(--color-text)]">
               Jenis Usaha
@@ -237,9 +216,7 @@ async function handleRegister() {
             </label>
             <select
               v-model="form.business_type"
-              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] cursor-pointer transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none"
-              @focus="$event.target.style.borderColor = 'var(--color-brand-500)'"
-              @blur="$event.target.style.borderColor = 'var(--color-border)'"
+              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] cursor-pointer transition-all duration-150 ease-out outline-hidden focus-visible:outline-none focus:border-brand-500"
             >
               <option value="">-- Pilih jenis usaha --</option>
               <option v-for="bt in businessTypes" :key="bt.value" :value="bt.value">
@@ -252,10 +229,7 @@ async function handleRegister() {
         <button
           @click="handleRegister"
           :disabled="isLoading"
-          class="w-full p-[12px] mt-[20px] text-[15px] font-semibold font-[inherit] border-0 rounded-[10px] cursor-pointer transition-all duration-[0.2s] ease bg-[linear-gradient(135deg,#10b981,#059669)] text-white"
-          :style="{ opacity: isLoading ? 0.7 : 1 }"
-          @mouseenter="!isLoading && ($event.target.style.boxShadow = '0 4px 16px rgba(16, 185, 129, 0.35)')"
-          @mouseleave="!isLoading && ($event.target.style.boxShadow = 'none')"
+          class="w-full p-[12px] mt-[20px] text-[15px] font-semibold font-[inherit] border-0 rounded-[10px] cursor-pointer transition-all duration-200 ease-out bg-[linear-gradient(135deg,#10b981,#059669)] text-white disabled:opacity-70 hover:shadow-[0_4px_16px_rgba(16,185,129,0.35)]"
         >
           <i v-if="isLoading" class="pi pi-spin pi-spinner mr-[8px]" />
           {{ isLoading ? "Mendaftarkan..." : "Daftar" }}
@@ -266,9 +240,7 @@ async function handleRegister() {
             Sudah punya akun?
             <router-link
               to="/login"
-              class="text-[#10b981] font-semibold no-underline"
-              @mouseenter="$event.target.style.textDecoration = 'underline'"
-              @mouseleave="$event.target.style.textDecoration = 'none'"
+              class="text-brand-500 font-semibold no-underline hover:underline"
             >
               Masuk
             </router-link>

@@ -44,7 +44,7 @@ async function handleLogin() {
           K
         </div>
         <h1 class="m-0 mb-[4px] text-[24px] font-bold text-[var(--color-text)] tracking-[-0.03em]">
-          Kasir<span class="text-[#10b981]">AI</span>
+          Kasir<span class="text-brand-500">AI</span>
         </h1>
         <p class="m-0 mb-[24px] text-[14px] text-[var(--color-text-secondary)]">
           Catat keuangan UMKM via WhatsApp
@@ -56,10 +56,10 @@ async function handleLogin() {
         <!-- Error -->
         <div
           v-if="errorMsg"
-          class="p-[12px_16px] mb-[20px] bg-[var(--color-expense-bg)] border border-[rgba(239,68,68,0.2)] rounded-[10px] flex items-start gap-[10px]"
+          class="p-[12px_16px] mb-[20px] bg-[var(--color-expense-bg)] border border-red-500/20 rounded-[10px] flex items-start gap-[10px]"
         >
           <i class="pi pi-exclamation-circle text-[var(--color-expense)] text-[16px] mt-[1px] shrink-0" />
-          <p class="m-0 text-[13px] text-[#dc2626] leading-[1.4]">
+          <p class="m-0 text-[13px] text-red-500 leading-[1.4]">
             {{ errorMsg }}
           </p>
         </div>
@@ -71,7 +71,7 @@ async function handleLogin() {
             </label>
             <div class="relative">
               <i
-                class="pi pi-phone absolute left-[14px] top-[50%] -translate-y-1/2 text-[14px] text-[var(--color-text-tertiary)]"
+                class="pi pi-phone absolute left-[14px] top-[50%] -translate-y-1/2 text-[14px] text-[var(--color-text-tertiary)] pointer-events-none"
               />
               <input
                 id="phone"
@@ -81,9 +81,7 @@ async function handleLogin() {
                 maxlength="13"
                 pattern="628[0-9]{8,10}"
                 placeholder="6281234567890"
-                class="w-full py-[12px] pr-[12px] pl-[44px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none"
-                @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
-                @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
+                class="w-full py-[12px] pr-[12px] pl-[44px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-150 ease-out outline-hidden focus-visible:outline-none focus:border-brand-500 focus:ring-[3px] focus:ring-brand-500/10"
                 @keyup.enter="handleLogin"
               />
             </div>
@@ -95,16 +93,14 @@ async function handleLogin() {
             </label>
             <div class="relative">
               <i
-                class="pi pi-lock absolute left-[14px] top-[50%] -translate-y-1/2 text-[14px] text-[var(--color-text-tertiary)]"
+                class="pi pi-lock absolute left-[14px] top-[50%] -translate-y-1/2 text-[14px] text-[var(--color-text-tertiary)] pointer-events-none"
               />
               <input
                 id="password"
                 v-model="password"
                 type="password"
                 placeholder="Masukkan password"
-                class="w-full py-[12px] pr-[12px] pl-[44px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none"
-                @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
-                @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
+                class="w-full py-[12px] pr-[12px] pl-[44px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-150 ease-out outline-hidden focus-visible:outline-none focus:border-brand-500 focus:ring-[3px] focus:ring-brand-500/10"
                 @keyup.enter="handleLogin"
               />
             </div>
@@ -113,10 +109,7 @@ async function handleLogin() {
           <button
             @click="handleLogin"
             :disabled="isLoading"
-            class="w-full p-[12px] mt-[4px] text-[15px] font-semibold font-[inherit] border-0 rounded-[10px] cursor-pointer transition-all duration-[0.2s] ease bg-[linear-gradient(135deg,#10b981,#059669)] text-white"
-            :style="{ opacity: isLoading ? 0.7 : 1 }"
-            @mouseenter="!isLoading && ($event.target.style.boxShadow = '0 4px 16px rgba(16, 185, 129, 0.35)')"
-            @mouseleave="!isLoading && ($event.target.style.boxShadow = 'none')"
+            class="w-full p-[12px] mt-[4px] text-[15px] font-semibold font-[inherit] border-0 rounded-[10px] cursor-pointer transition-all duration-200 ease-out bg-[linear-gradient(135deg,#10b981,#059669)] text-white disabled:opacity-70 hover:shadow-[0_4px_16px_rgba(16,185,129,0.35)]"
           >
             <i v-if="isLoading" class="pi pi-spin pi-spinner mr-[8px]" />
             {{ isLoading ? "Memproses..." : "Masuk" }}
@@ -128,9 +121,7 @@ async function handleLogin() {
             Belum punya akun?
             <router-link
               to="/register"
-              class="text-[#10b981] font-semibold no-underline"
-              @mouseenter="$event.target.style.textDecoration = 'underline'"
-              @mouseleave="$event.target.style.textDecoration = 'none'"
+              class="text-brand-500 font-semibold no-underline hover:underline"
             >
               Daftar di sini
             </router-link>
