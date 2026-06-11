@@ -11,7 +11,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-kasiraiai}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-kasiraiai}",
+        ]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -35,12 +39,12 @@ services:
       DB_PORT: "5432"
       DB_NAME: ${DB_NAME:-kasiraiai}
       DB_USER: ${DB_USER:-postgres}
-      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
       DB_SSL_MODE: disable
       DB_MAX_CONNECTIONS: ${DB_MAX_CONNECTIONS:-25}
       DB_MAX_IDLE_CONNECTIONS: ${DB_MAX_IDLE_CONNECTIONS:-5}
 
-      JWT_SECRET: ${JWT_SECRET:-ganti_dengan_secret_panjang_minimal_32_karakter}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
       JWT_EXPIRY_HOURS: ${JWT_EXPIRY_HOURS:-72}
 
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
