@@ -85,7 +85,7 @@ async function handleRegister() {
               v-model="form.name"
               type="text"
               placeholder="Budi Santoso"
-              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0"
+              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none"
               @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
               @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
             />
@@ -99,7 +99,7 @@ async function handleRegister() {
               v-model="form.business_name"
               type="text"
               placeholder="Warung Nasi Budi"
-              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0"
+              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none"
               @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
               @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
             />
@@ -116,7 +116,7 @@ async function handleRegister() {
               maxlength="13"
               pattern="628[0-9]{8,10}"
               placeholder="6281234567890"
-              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0"
+              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none"
               @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
               @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
             />
@@ -130,7 +130,7 @@ async function handleRegister() {
               v-model="form.password"
               type="password"
               placeholder="Minimal 6 karakter"
-              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0"
+              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none"
               @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
               @blur="$event.target.style.borderColor = 'var(--color-border)'; $event.target.style.boxShadow = 'none'"
             />
@@ -143,7 +143,7 @@ async function handleRegister() {
             </label>
             <select
               v-model="form.business_type"
-              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] cursor-pointer transition-all duration-[0.15s] ease outline-0"
+              class="w-full py-[11px] px-[14px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] cursor-pointer transition-all duration-[0.15s] ease outline-0 focus-visible:outline-none"
               @focus="$event.target.style.borderColor = 'var(--color-brand-500)'"
               @blur="$event.target.style.borderColor = 'var(--color-border)'"
             >
