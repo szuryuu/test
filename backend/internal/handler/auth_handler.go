@@ -21,7 +21,12 @@ func NewAuthHandler(svc service.AuthService) *AuthHandler {
 func (h *AuthHandler) Register(c *gin.Context) {
 	var req service.RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		BadRequest(c, ErrInvalidInput)
+		fieldErrors := validationErrors(err)
+		if len(fieldErrors) > 0 {
+			ErrorResponse(c, http.StatusBadRequest, ErrInvalidInput, fieldErrors...)
+		} else {
+			BadRequest(c, ErrInvalidInput)
+		}
 		return
 	}
 
@@ -48,7 +53,12 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		Password    string `json:"password" binding:"required"`
 	}
 	if err := c.ShouldBindJSON(&req); err != nil {
-		BadRequest(c, ErrInvalidInput)
+		fieldErrors := validationErrors(err)
+		if len(fieldErrors) > 0 {
+			ErrorResponse(c, http.StatusBadRequest, ErrInvalidInput, fieldErrors...)
+		} else {
+			BadRequest(c, ErrInvalidInput)
+		}
 		return
 	}
 
