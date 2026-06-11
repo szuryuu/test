@@ -44,7 +44,7 @@ func (h *AuthHandler) Register(c *gin.Context) {
 
 func (h *AuthHandler) Login(c *gin.Context) {
 	var req struct {
-		PhoneNumber string `json:"phone_number" binding:"required"`
+		PhoneNumber string `json:"phone_number" binding:"required,startswith=628,numeric,min=11,max=13"`
 		Password    string `json:"password" binding:"required"`
 	}
 	if err := c.ShouldBindJSON(&req); err != nil {

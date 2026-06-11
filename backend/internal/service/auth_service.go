@@ -28,7 +28,7 @@ type AuthService interface {
 type RegisterRequest struct {
 	Name         string `json:"name" binding:"required"`
 	BusinessName string `json:"business_name" binding:"required"`
-	PhoneNumber  string `json:"phone_number" binding:"required"`
+	PhoneNumber  string `json:"phone_number" binding:"required,startswith=628,numeric,min=11,max=13"`
 	Email        string `json:"email,omitempty"`
 	Password     string `json:"password" binding:"required,min=6"`
 	BusinessType string `json:"business_type,omitempty"`

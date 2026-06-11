@@ -76,7 +76,10 @@ async function handleLogin() {
               <input
                 id="phone"
                 v-model="phoneNumber"
-                type="text"
+                type="tel"
+                inputmode="numeric"
+                maxlength="13"
+                pattern="628[0-9]{8,10}"
                 placeholder="6281234567890"
                 class="w-full py-[12px] pr-[12px] pl-[44px] text-[14px] font-[inherit] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[10px] text-[var(--color-text)] transition-all duration-[0.15s] ease outline-0"
                 @focus="$event.target.style.borderColor = 'var(--color-brand-500)'; $event.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)'"
