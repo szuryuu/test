@@ -160,11 +160,6 @@ const initials = computed(() => {
         <i class="pi pi-whatsapp text-[16px]" />
         Hubungkan WhatsApp
       </a>
-      <p
-        class="mt-[6px] mb-0 text-center text-[10px] text-[rgba(255,255,255,0.4)]"
-      >
-        Catat transaksi via chat
-      </p>
     </div>
 
     <!-- User footer -->
