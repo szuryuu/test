@@ -68,6 +68,7 @@ func main() {
 
 	// Health check — no auth, before api group
 	r.GET("/health", handler.HealthCheck)
+	r.HEAD("/health", handler.HealthCheck)
 
 	// Webhook — no auth
 	r.POST("/webhook/whatsapp", webhookHandler.Handle)
