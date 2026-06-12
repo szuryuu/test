@@ -14,7 +14,7 @@ import (
 )
 
 type WebhookHandler struct {
-	svc     service.TransactionService
+	svc      service.TransactionService
 	umkmRepo repository.UmkmRepo
 	fonnte   *fonnte.Client
 }
@@ -27,15 +27,30 @@ func NewWebhookHandler(
 	return &WebhookHandler{svc: svc, umkmRepo: umkmRepo, fonnte: fonnteClient}
 }
 
-// Handle menerima webhook dari Fonnte (multipart/form-data).
-// Selalu return 200 ke Fonnte meskipun parsing gagal —
-// pesan error dikirim ke user via WhatsApp, bukan via HTTP response.
+// Handle menerima webhook dari Fonnte.
+// Mampu memproses Content-Type application/json maupun application/x-www-form-urlencoded.
+// Selalu return 200 ke Fonnte meskipun parsing gagal.
 func (h *WebhookHandler) Handle(c *gin.Context) {
-	sender := c.PostForm("sender")
-	message := c.PostForm("message")
+	var payload struct {
+		Sender  string `json:"sender" form:"sender"`
+		Message string `json:"message" form:"message"`
+		Device  string `json:"device" form:"device"`
+	}
 
+	// Coba bind otomatis berdasarkan Content-Type (JSON atau Form) dari Fonnte
+	if err := c.ShouldBind(&payload); err != nil {
+		// Fallback darurat jika header Fonnte tidak standar atau berantakan
+		payload.Sender = c.PostForm("sender")
+		payload.Message = c.PostForm("message")
+		payload.Device = c.PostForm("device")
+	}
+
+	sender := payload.Sender
+	message := payload.Message
+
+	// Jika masih kosong, tolak secara diam-diam agar Fonnte tidak retry terus
 	if sender == "" || message == "" {
-		c.String(http.StatusOK, "OK")
+		c.JSON(http.StatusOK, gin.H{"status": "ok", "message": "payload kosong atau tidak valid"})
 		return
 	}
 
