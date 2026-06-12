@@ -70,6 +70,9 @@ func main() {
 
 	// Webhook — no auth
 	r.POST("/webhook/whatsapp", webhookHandler.Handle)
+	r.GET("/webhook/whatsapp", func(c *gin.Context) {
+		c.String(http.StatusOK, "OK")
+	})
 
 	api := r.Group("/api/v1")
 	{
