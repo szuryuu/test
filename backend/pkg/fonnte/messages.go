@@ -15,15 +15,18 @@ Cara pakai:
 ⭐ Cek skor KUR: ketik *skor*
 ❓ Bantuan: ketik *bantuan*`
 
-	MsgHelp = `Perintah yang tersedia:
-• *laporan* - Ringkasan keuangan bulan ini
-• *hari ini* - Transaksi hari ini
-• *minggu ini* - Transaksi minggu ini
-• *skor* - Cek kesiapan KUR Anda
-• *hapus terakhir* - Hapus transaksi terakhir
+	MsgHelp = `🤖 *Pusat Bantuan KasirAI*
 
-Untuk mencatat transaksi, cukup tulis seperti biasa:
-"jual 5 kaos 250rb" atau "bayar listrik 200rb"`
+Anda bisa mencatat transaksi cukup dengan *chat* biasa (contoh: "Terjual 5 porsi bakso 100rb").
+
+*Perintah Khusus:*
+📊 *hari ini* - Ringkasan keuangan hari ini
+📈 *minggu ini* - Ringkasan keuangan minggu ini
+📑 *laporan* - Buat laporan bulanan lengkap
+⭐ *skor* - Cek skor kesiapan KUR Anda
+⏪ *batalkan* - Hapus transaksi yang paling terakhir dicatat (gunakan jika ada salah ketik/revisi)
+
+Ada yang bisa saya bantu catat sekarang?`
 
 	MsgAIParseFailure = "Maaf, saya tidak bisa memahami transaksi tersebut. Coba tulis lebih jelas, contoh: 'jual nasi 30rb'"
 
