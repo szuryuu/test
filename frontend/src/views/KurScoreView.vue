@@ -45,9 +45,13 @@ async function recalculate() {
 <template>
   <div>
     <!-- Page header -->
-    <div class="flex justify-between items-start mb-[24px] flex-wrap gap-[12px]">
+    <div
+      class="flex justify-between items-start mb-[24px] flex-wrap gap-[12px]"
+    >
       <div>
-        <h1 class="m-0 mb-[4px] text-[24px] font-bold text-[var(--color-text)] tracking-[-0.02em]">
+        <h1
+          class="m-0 mb-[4px] text-[24px] font-bold text-[var(--color-text)] tracking-[-0.02em]"
+        >
           Skor KUR
         </h1>
         <p class="m-0 text-[14px] text-[var(--color-text-secondary)]">
@@ -60,12 +64,45 @@ async function recalculate() {
         :disabled="isLoading"
         class="flex items-center gap-[8px] py-[10px] px-[20px] text-[14px] font-semibold font-[inherit] border-0 rounded-[10px] cursor-pointer transition-all duration-[0.15s] ease bg-[linear-gradient(135deg,#10b981,#059669)] text-white"
         :style="{ opacity: isLoading ? 0.7 : 1 }"
-        @mouseenter="!isLoading && ($event.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.4)')"
+        @mouseenter="
+          !isLoading &&
+          ($event.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.4)')
+        "
         @mouseleave="!isLoading && ($event.target.style.boxShadow = 'none')"
       >
-        <i class="pi pi-refresh text-[14px]" :class="{ 'pi-spin': isLoading }" />
+        <i
+          class="pi pi-refresh text-[14px]"
+          :class="{ 'pi-spin': isLoading }"
+        />
         {{ isLoading ? "Menghitung..." : "Hitung Ulang" }}
       </button>
+    </div>
+
+    <!-- Explain -->
+    <div
+      class="mb-[24px] p-[16px_20px] bg-[rgba(16,185,129,0.05)] border border-[rgba(16,185,129,0.2)] rounded-[var(--radius-card)] flex gap-[16px] items-start"
+    >
+      <div
+        class="w-[40px] h-[40px] rounded-[10px] bg-[rgba(16,185,129,0.1)] flex items-center justify-center text-[var(--color-income)] shrink-0 mt-[2px]"
+      >
+        <i class="pi pi-info-circle text-[20px]" />
+      </div>
+      <div>
+        <h3
+          class="m-0 mb-[6px] text-[15px] font-semibold text-[var(--color-text)]"
+        >
+          Apa itu KUR?
+        </h3>
+        <p
+          class="m-0 text-[13px] text-[var(--color-text-secondary)] leading-[1.6]"
+        >
+          <strong>Kredit Usaha Rakyat (KUR)</strong> adalah program pembiayaan
+          bersubsidi dari pemerintah dengan bunga rendah untuk UMKM. Fitur Skor
+          KUR ini menganalisis kesehatan keuangan Anda secara otomatis dari
+          riwayat transaksi, membantu Anda melihat seberapa siap usaha Anda jika
+          ingin mengajukan pinjaman modal ke bank.
+        </p>
+      </div>
     </div>
 
     <!-- Loading state -->
@@ -79,7 +116,9 @@ async function recalculate() {
       v-if="error"
       class="p-[16px_20px] bg-[var(--color-expense-bg)] border border-[rgba(239,68,68,0.2)] rounded-[var(--radius-card)] mb-[16px] flex items-start gap-[12px]"
     >
-      <i class="pi pi-exclamation-triangle text-[var(--color-expense)] text-[18px] mt-[1px]" />
+      <i
+        class="pi pi-exclamation-triangle text-[var(--color-expense)] text-[18px] mt-[1px]"
+      />
       <div>
         <p class="m-0 text-[14px] font-medium text-[#dc2626]">
           {{ error }}
@@ -97,11 +136,16 @@ async function recalculate() {
       >
         <i class="pi pi-star" />
       </div>
-      <h3 class="m-0 mb-[8px] text-[18px] font-semibold text-[var(--color-text)]">
+      <h3
+        class="m-0 mb-[8px] text-[18px] font-semibold text-[var(--color-text)]"
+      >
         Belum Ada Data Skor
       </h3>
-      <p class="mx-auto mb-[20px] text-[14px] text-[var(--color-text-secondary)] max-w-[360px] leading-[1.6]">
-        Tambahkan transaksi terlebih dahulu melalui WhatsApp atau halaman Transaksi, lalu hitung ulang skor KUR Anda.
+      <p
+        class="mx-auto mb-[20px] text-[14px] text-[var(--color-text-secondary)] max-w-[360px] leading-[1.6]"
+      >
+        Tambahkan transaksi terlebih dahulu melalui WhatsApp atau halaman
+        Transaksi, lalu hitung ulang skor KUR Anda.
       </p>
       <router-link
         to="/transactions"
@@ -120,7 +164,10 @@ async function recalculate() {
         class="col-span-2 p-[12px_16px] bg-[rgba(245,158,11,0.08)] border border-[rgba(245,158,11,0.25)] rounded-[var(--radius-card)] flex items-center gap-[10px] text-[13px] text-[#92400e]"
       >
         <i class="pi pi-clock text-[16px] shrink-0" />
-        <span>Data mungkin sudah tidak akurat. Klik <strong>"Hitung Ulang"</strong> untuk memperbarui.</span>
+        <span
+          >Data mungkin sudah tidak akurat. Klik
+          <strong>"Hitung Ulang"</strong> untuk memperbarui.</span
+        >
       </div>
 
       <!-- Left column -->
@@ -130,22 +177,43 @@ async function recalculate() {
         <div
           class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-card)] p-[20px] shadow-[var(--shadow-card)]"
         >
-          <h3 class="m-0 mb-[16px] text-[15px] font-semibold text-[var(--color-text)]">
+          <h3
+            class="m-0 mb-[16px] text-[15px] font-semibold text-[var(--color-text)]"
+          >
             Detail Skor
           </h3>
 
           <div class="flex flex-col">
             <div
               v-for="(item, i) in [
-                { label: 'Rata-rata Pemasukan/Bulan', value: formatRupiah(score.monthly_income_avg) },
-                { label: 'Rata-rata Pengeluaran/Bulan', value: formatRupiah(score.monthly_expense_avg) },
-                { label: 'Margin Laba', value: `${score.profit_margin}%`, color: 'var(--color-income)' },
-                { label: 'Konsistensi Pencatatan', value: `${score.consistency_score}/100` },
-                { label: 'Bulan Data Tersedia', value: `${score.months_of_data} bulan` },
+                {
+                  label: 'Rata-rata Pemasukan/Bulan',
+                  value: formatRupiah(score.monthly_income_avg),
+                },
+                {
+                  label: 'Rata-rata Pengeluaran/Bulan',
+                  value: formatRupiah(score.monthly_expense_avg),
+                },
+                {
+                  label: 'Margin Laba',
+                  value: `${score.profit_margin}%`,
+                  color: 'var(--color-income)',
+                },
+                {
+                  label: 'Konsistensi Pencatatan',
+                  value: `${score.consistency_score}/100`,
+                },
+                {
+                  label: 'Bulan Data Tersedia',
+                  value: `${score.months_of_data} bulan`,
+                },
               ]"
               :key="i"
               class="flex justify-between items-center py-[10px]"
-              :style="{ borderBottom: i < 4 ? '1px solid var(--color-border-light)' : 'none' }"
+              :style="{
+                borderBottom:
+                  i < 4 ? '1px solid var(--color-border-light)' : 'none',
+              }"
             >
               <span class="text-[13px] text-[var(--color-text-secondary)]">
                 {{ item.label }}
@@ -164,7 +232,16 @@ async function recalculate() {
             class="mt-[12px] pt-[12px] border-t border-[var(--color-border-light)]"
           >
             <p class="m-0 text-[11px] text-[var(--color-text-tertiary)]">
-              Terakhir dihitung: {{ new Date(score.calculated_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }}
+              Terakhir dihitung:
+              {{
+                new Date(score.calculated_at).toLocaleDateString("id-ID", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              }}
             </p>
           </div>
         </div>
