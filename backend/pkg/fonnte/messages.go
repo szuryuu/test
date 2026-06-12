@@ -28,7 +28,7 @@ Anda bisa mencatat transaksi cukup dengan *chat* biasa (contoh: "Terjual 5 porsi
 
 Ada yang bisa saya bantu catat sekarang?`
 
-	MsgAIParseFailure = "Maaf, saya tidak bisa memahami transaksi tersebut. Coba tulis lebih jelas, contoh: 'jual nasi 30rb'"
+	MsgAIParseFailure = "Maaf, saya tidak bisa memahami transaksi tersebut. Coba tulis lebih jelas, contoh: 'Terjual 1 porsi bakso 20rb'"
 
 	MsgTransaksiTercatat = "✅ Tercatat! %s Rp%s. %s"
 )
