@@ -14,7 +14,7 @@ export const useTransactionStore = defineStore("transaction", () => {
     error.value = null;
     try {
       const res = await transactionAPI.list(params);
-      transactions.value = res.data.data.transactions;
+      transactions.value = res.data.data.transactions || [];
       total.value = res.data.data.total;
       page.value = res.data.data.page;
     } catch (err) {
@@ -34,5 +34,14 @@ export const useTransactionStore = defineStore("transaction", () => {
     transactions.value = transactions.value.filter((t) => t.id !== id);
   }
 
-  return { transactions, total, page, isLoading, error, fetchTransactions, createTransaction, deleteTransaction };
+  return {
+    transactions,
+    total,
+    page,
+    isLoading,
+    error,
+    fetchTransactions,
+    createTransaction,
+    deleteTransaction,
+  };
 });
