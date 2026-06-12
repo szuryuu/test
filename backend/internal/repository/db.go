@@ -16,7 +16,7 @@ import (
 
 func InitDB(cfg *config.Config) (*pgxpool.Pool, error) {
 	dsn := fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s?sslmode=%s",
+		"postgres://%s:%s@%s:%s/%s?sslmode=%s&statement_cache_capacity=0",
 		cfg.DBUser,
 		cfg.DBPassword,
 		cfg.DBHost,
