@@ -61,13 +61,13 @@ Built for the [IDCamp Developer Challenge #2](https://www.dicoding.com/challenge
 
 ### System Components
 
-| Layer               | Technology                            | Role                                                                 |
-| :------------------ | :------------------------------------ | :------------------------------------------------------------------- |
-| **Frontend**        | Vue 3, Vite, PrimeVue, Chart.js       | SPA dashboard with KPI cards, charts, transaction table, KUR gauge   |
-| **Backend**         | Go 1.26, Gin, pgx/v5                  | REST API, AI orchestration, business logic, WhatsApp webhook ingress |
-| **Database**        | PostgreSQL 17                         | Stores UMKM profiles, transactions (amount in Rupiah), KUR history   |
-| **AI Parsing**      | DeepSeek Chat API                     | Natural-language → structured transaction JSON from WhatsApp messages |
-| **WhatsApp Gateway**| Fonnte API                            | Receives webhook, sends reply messages back to MSME owners           |
+| Layer                | Technology                      | Role                                                                  |
+| :------------------- | :------------------------------ | :-------------------------------------------------------------------- |
+| **Frontend**         | Vue 3, Vite, PrimeVue, Chart.js | SPA dashboard with KPI cards, charts, transaction table, KUR gauge    |
+| **Backend**          | Go 1.26, Gin, pgx/v5            | REST API, AI orchestration, business logic, WhatsApp webhook ingress  |
+| **Database**         | PostgreSQL 17                   | Stores UMKM profiles, transactions (amount in Rupiah), KUR history    |
+| **AI Parsing**       | DeepSeek Chat API               | Natural-language → structured transaction JSON from WhatsApp messages |
+| **WhatsApp Gateway** | Fonnte API                      | Receives webhook, sends reply messages back to MSME owners            |
 
 ---
 
@@ -111,19 +111,19 @@ Built for the [IDCamp Developer Challenge #2](https://www.dicoding.com/challenge
 
 ## Tech Stack
 
-| Layer        | Technology                                                              |
-| :----------- | :---------------------------------------------------------------------- |
-| **Language** | Go 1.26 (backend), JavaScript (frontend)                                |
-| **HTTP**     | Gin Web Framework                                                       |
-| **Database** | PostgreSQL 17 + pgx/v5 (connection pooling, parameterized queries)      |
-| **Migrations**| golang-migrate/migrate                                                 |
-| **Auth**     | JWT (HS256, golang-jwt/jwt/v5), bcrypt password hashing (cost 12)      |
-| **AI**       | DeepSeek Chat API (OpenAI-compatible `/v1/chat/completions`)            |
-| **WhatsApp** | Fonnte API (webhook ingress, message sending)                           |
-| **Frontend** | Vue 3 (Composition API), Vite 6, Pinia, Vue Router 4, Axios            |
-| **UI Kit**   | PrimeVue 4 + PrimeFlex + Tailwind CSS 4                                 |
-| **Charts**   | Chart.js via vue-chartjs                                                |
-| **DevOps**   | Docker Compose (dev), Dockerfiles (backend/frontend), Render + Vercel   |
+| Layer          | Technology                                                            |
+| :------------- | :-------------------------------------------------------------------- |
+| **Language**   | Go 1.26 (backend), JavaScript (frontend)                              |
+| **HTTP**       | Gin Web Framework                                                     |
+| **Database**   | PostgreSQL 17 + pgx/v5 (connection pooling, parameterized queries)    |
+| **Migrations** | golang-migrate/migrate                                                |
+| **Auth**       | JWT (HS256, golang-jwt/jwt/v5), bcrypt password hashing (cost 12)     |
+| **AI**         | DeepSeek Chat API (OpenAI-compatible `/v1/chat/completions`)          |
+| **WhatsApp**   | Fonnte API (webhook ingress, message sending)                         |
+| **Frontend**   | Vue 3 (Composition API), Vite 6, Pinia, Vue Router 4, Axios           |
+| **UI Kit**     | PrimeVue 4 + PrimeFlex + Tailwind CSS 4                               |
+| **Charts**     | Chart.js via vue-chartjs                                              |
+| **DevOps**     | Docker Compose (dev), Dockerfiles (backend/frontend), Render + Vercel |
 
 ---
 
@@ -263,39 +263,39 @@ Auth: `Authorization: Bearer <JWT>` (except `/auth/*` and `/webhook/*`)
 
 ### Public Endpoints
 
-| Method | Path                  | Description                                   |
-| :----- | :-------------------- | :-------------------------------------------- |
-| POST   | `/api/v1/auth/register` | Register a new MSME account                  |
-| POST   | `/api/v1/auth/login`    | Login with phone number + password, get JWT  |
-| POST   | `/webhook/whatsapp`     | Fonnte webhook — receives WhatsApp messages  |
-| GET    | `/health`               | Health check (returns `{"status":"ok"}`)     |
+| Method | Path                    | Description                                 |
+| :----- | :---------------------- | :------------------------------------------ |
+| POST   | `/api/v1/auth/register` | Register a new MSME account                 |
+| POST   | `/api/v1/auth/login`    | Login with phone number + password, get JWT |
+| POST   | `/webhook/whatsapp`     | Fonnte webhook — receives WhatsApp messages |
+| GET    | `/health`               | Health check (returns `{"status":"ok"}`)    |
 
 ### Protected Endpoints
 
-| Method | Path                            | Description                                    |
-| :----- | :------------------------------ | :--------------------------------------------- |
-| GET    | `/api/v1/dashboard/summary`     | Income/expense/profit summary (filters: period, date) |
-| GET    | `/api/v1/dashboard/categories`  | Spending/income breakdown by category           |
-| GET    | `/api/v1/transactions`          | List transactions (pagination, date range, type filter) |
-| POST   | `/api/v1/transactions`          | Manually create a transaction                   |
-| DELETE | `/api/v1/transactions/:id`      | Soft-delete a transaction                       |
-| GET    | `/api/v1/kur/score`             | Get latest KUR readiness score + recommendations |
-| POST   | `/api/v1/kur/recalculate`       | Force-recalculate KUR score from transaction history |
-| POST   | `/api/v1/reports/monthly`       | Generate monthly report, send via WhatsApp      |
-| GET    | `/api/v1/umkm/profile`          | Get authenticated user's profile                |
+| Method | Path                           | Description                                             |
+| :----- | :----------------------------- | :------------------------------------------------------ |
+| GET    | `/api/v1/dashboard/summary`    | Income/expense/profit summary (filters: period, date)   |
+| GET    | `/api/v1/dashboard/categories` | Spending/income breakdown by category                   |
+| GET    | `/api/v1/transactions`         | List transactions (pagination, date range, type filter) |
+| POST   | `/api/v1/transactions`         | Manually create a transaction                           |
+| DELETE | `/api/v1/transactions/:id`     | Soft-delete a transaction                               |
+| GET    | `/api/v1/kur/score`            | Get latest KUR readiness score + recommendations        |
+| POST   | `/api/v1/kur/recalculate`      | Force-recalculate KUR score from transaction history    |
+| POST   | `/api/v1/reports/monthly`      | Generate monthly report, send via WhatsApp              |
+| GET    | `/api/v1/umkm/profile`         | Get authenticated user's profile                        |
 
 ---
 
 ## WhatsApp Commands
 
-| Message         | Action                                          |
-| :-------------- | :---------------------------------------------- |
-| `bantuan`       | Show command list and usage help                |
-| `laporan`       | Send monthly financial summary                  |
-| `hari ini`      | Today's transaction summary                     |
-| `minggu ini`    | This week's transaction summary                 |
-| `skor`          | Show KUR readiness score and recommendations    |
-| `hapus terakhir`| Soft-delete the last recorded transaction       |
+| Message          | Action                                       |
+| :--------------- | :------------------------------------------- |
+| `bantuan`        | Show command list and usage help             |
+| `laporan`        | Send monthly financial summary               |
+| `hari ini`       | Today's transaction summary                  |
+| `minggu ini`     | This week's transaction summary              |
+| `skor`           | Show KUR readiness score and recommendations |
+| `hapus terakhir` | Soft-delete the last recorded transaction    |
 
 Any other message is treated as a transaction attempt and parsed by the AI.
 
